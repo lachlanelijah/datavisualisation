@@ -12,14 +12,17 @@ void setup() {
   fill(7, 151, 216); // left glass
   quad(0, 400, 0, 515, 100, 510, 100, 200);
   
-  fill(201, 201, 181);
+  fill(201, 201, 181); //building 10 back
   quad(485, 0, 485, 470, 300, 460, 0, 0);
   
+  fill(40, 173, 87); //hedge left
+  quad(450, 475, 300, 465, 300, 230, 450, 220);
   
+  fill(34, 139, 71); //hedge right
+  quad(450, 220, 475, 222, 475, 473, 450, 475);
   
   fill(62, 195, 255); //right glass
   quad(100, 510, 300, 475, 400, 0, 100, 200);
-  
   
   fill(144,144,144); //back facade
   quad(440, 0, 400, 480, 300, 475, 300, 0);
@@ -29,12 +32,13 @@ void setup() {
   
   fill(226, 227, 206); //building 10 front
   beginShape();
-  vertex(485, 0);
-  vertex(485, 470);
-  vertex(640, 452);
-  vertex(640, 10);
-  vertex(600, 0);
-  endShape(CLOSE);
+  quad(485, 0, 485, 470, 640, 452, 640, 0);
+  //vertex(485, 0);
+  //vertex(485, 470);
+  //vertex(640, 452);
+  //vertex(640, 0);
+  //vertex(600, 0);
+  //endShape(CLOSE);
 
 }
 
