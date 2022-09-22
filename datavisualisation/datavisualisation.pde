@@ -5,6 +5,11 @@ void setup() {
   size(900, 800);
   noStroke();
   background(178, 224, 245);
+  frameRate(60);
+}
+
+void draw() {
+  background(178, 224, 245);
   
   fill (59,59,59); //ground
   quad(0, 440, width, 440, width, height, 0, height);
@@ -15,10 +20,11 @@ void setup() {
   fill(201, 201, 181); //building 10 back
   quad(485, 0, 485, 470, 300, 460, 0, 0);
   
-  fill(40, 173, 87); //hedge left
+  fill(34, 139, 71);  //hedge left
   quad(450, 475, 300, 465, 300, 230, 450, 220);
   
-  fill(34, 139, 71); //hedge right
+  
+  fill(40, 173, 87);//hedge right
   quad(450, 220, 475, 222, 475, 473, 450, 475);
   
   fill(62, 195, 255); //right glass
@@ -33,15 +39,9 @@ void setup() {
   fill(226, 227, 206); //building 10 front
   beginShape();
   quad(485, 0, 485, 470, 640, 452, 640, 0);
-  //vertex(485, 0);
-  //vertex(485, 470);
-  //vertex(640, 452);
-  //vertex(640, 0);
-  //vertex(600, 0);
-  //endShape(CLOSE);
 
-}
-
-void draw() {
+  fill(0);
+  textAlign(CENTER);
   
+  text("timeTest", 770, 100);
 }
