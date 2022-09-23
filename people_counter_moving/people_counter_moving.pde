@@ -87,13 +87,13 @@ void draw() {
   
     for (int i = 0; i<6; i++) {
     float y= 6;
+    peopleCount = 6;
     for (int j = 0; j < y; j++) {
       drawCircle(j*200);
+     
     }
     
-     //for (int i = 0; i <4; i++) {
     
-     // drawCircle(i*200);
      
      
     
