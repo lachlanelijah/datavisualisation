@@ -1,19 +1,42 @@
 import beads.*;
 import controlP5.*;
 
+ControlP5 gui;
+
 int hour = 0;
 int minute = 0;
 String time;
 int timer;
 String paddedHour = "00";
 String paddedMinute = "00";
+Boolean isPaused = false;
 
 void setup() {
-  size(900, 800);
+  
+  gui = new ControlP5(this);
+  size(900, 700);
   noStroke();
   background(178, 224, 245);
   frameRate(60);
   timer = millis();
+  
+  gui.addSlider("time_of_day")
+    .setPosition(30,680)
+    .setRange(0,24)
+    .setValue(0)
+    .setSize(800,10)
+    .showTickMarks(true)
+    .setNumberOfTickMarks(25)
+  ;
+  
+ // gui.addButton("playpause")
+ //   .setPosition(30, 650)
+ //   .setSize(20, 20)
+ //   .setValue(1)
+ //;
+ 
+ paddedHour = "00";
+  
 }
 
 void draw() {
@@ -30,7 +53,6 @@ void draw() {
   
   fill(34, 139, 71);  //hedge left
   quad(450, 475, 300, 465, 300, 230, 450, 220);
-  
   
   fill(40, 173, 87);//hedge right
   quad(450, 220, 475, 222, 475, 473, 450, 475);
@@ -95,5 +117,18 @@ void formatTime() {
    paddedHour = String.format("%02d", hour);
    time = paddedHour + ":" + minute;
  }
- 
+}
+
+//void playpause() {
+//  while (isPaused == false) {
+    
+//  }
+//}
+
+void time_of_day(float val) {
+  paddedMinute = "00";
+  int temp = Math.round(val);
+  paddedHour = String.valueOf(temp);
+  hour = temp;
+  minute = 0;
 }
