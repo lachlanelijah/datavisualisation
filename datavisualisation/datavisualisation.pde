@@ -79,11 +79,23 @@ void draw() {
 
   fill(0);
   textAlign(CENTER);
-  textSize(75);
   textFont(montserrat);
   
+  //time
   time = paddedHour + ":" + paddedMinute;
   text(time, 770, 100);
+  
+  //timeline scale numbers
+  textSize(15);
+  text(0, 66, 695);
+  text(3, 162, 695);
+  text(6, 258, 695);
+  text(9, 354, 695);
+  text(12, 450, 695);
+  text(15, 546, 695);
+  text(18, 642, 695);
+  text(21, 738, 695);
+  text(24, 834, 695);
   
   if (millis()-timer > 1000) {
     formatTime();
