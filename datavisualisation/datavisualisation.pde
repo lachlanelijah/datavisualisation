@@ -12,8 +12,11 @@ String paddedMinute = "00";
 Boolean pause;
 float sliderValue;
 float parsedMinute;
+PFont montserrat;
 
 void setup() {
+  
+  montserrat = createFont("Montserrat-Medium.ttf", 75);
   
   rectMode(CORNERS);
   
@@ -76,6 +79,8 @@ void draw() {
 
   fill(0);
   textAlign(CENTER);
+  textSize(75);
+  textFont(montserrat);
   
   time = paddedHour + ":" + paddedMinute;
   text(time, 770, 100);
