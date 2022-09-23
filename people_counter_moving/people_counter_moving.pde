@@ -73,25 +73,42 @@ float getNumberOfPeople() {
 
 
 void draw() {
+  //popMatrix();
 
   background(225);
+  pushMatrix();
 
   //translate(xPos,yPos); 
-  for (int i = 0; i <xy.getRowCount(); i++) {
-    float y= getNumberOfPeople();
+  //for (int i = 0; i <xy.getRowCount(); i++) {
+  //  float y= getNumberOfPeople();
+  //  for (int j = 0; j < y; j++) {
+  //    drawCircle(j*200);
+  //  }
+  
+    for (int i = 0; i<6; i++) {
+    float y= 6;
     for (int j = 0; j < y; j++) {
       drawCircle(j*200);
     }
+    
+     //for (int i = 0; i <4; i++) {
+    
+     // drawCircle(i*200);
+     
+     
+    
   }
   xPos += xSpeed;
   
    // Change textLabel's label to current peopleCount
+   popMatrix();
+   cp5.getController("people").setPosition(100,50);
    cp5.getController("people").setValueLabel("People count " + peopleCount + "");
 }
 
 
 void drawCircle(float spacing) {
-  pushMatrix();
+  //pushMatrix();
   circle(xPos-spacing, height-100, 100);
-  popMatrix();
+  //popMatrix();
 }
