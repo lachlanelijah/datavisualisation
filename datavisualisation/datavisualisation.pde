@@ -16,6 +16,9 @@ PFont montserrat;
 
 void setup() {
   
+  PImage[] forwardImg = {loadImage("data/forward.png"), loadImage("data/forward_hover.png"), loadImage("")};
+  PImage[] backImg = {loadImage("data/back.png"), loadImage("data/back_hover.png"), loadImage("")};
+  
   montserrat = createFont("Montserrat-Medium.ttf", 75);
   
   rectMode(CORNERS);
@@ -31,11 +34,13 @@ void setup() {
    .setPosition(10, 660)
    .setSize(46,20)
    .setValue(0)
+   .setImages(backImg)
  ;
  gui.addButton("forward")
    .setPosition(844, 660)
    .setSize(46,20)
    .setValue(0)
+   .setImages(forwardImg)
  ;
  
  hour = 0;
@@ -49,7 +54,7 @@ void draw() {
   fill (59,59,59); //ground
   quad(0, 440, width, 440, width, height, 0, height);
   
-  fill(7, 151, 216); // left glass
+  fill(7, 151, 216); // left glass (darker)
   quad(0, 400, 0, 515, 100, 510, 100, 200);
   
   fill(201, 201, 181); //building 10 back
@@ -87,6 +92,7 @@ void draw() {
   
   //timeline scale numbers
   textSize(15);
+  fill(255,255,255);
   text(0, 66, 695);
   text(3, 162, 695);
   text(6, 258, 695);
@@ -161,6 +167,7 @@ void back() {
  }
  if (hour > 0) {
    hour -= 1;
+   minute = -1;
  }
 }
 
