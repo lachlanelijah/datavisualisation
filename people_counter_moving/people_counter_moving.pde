@@ -73,13 +73,11 @@ float getNumberOfPeople() {
 
 
 void draw() {
-  //popMatrix();
-
   background(225);
   pushMatrix();
 
   //translate(xPos,yPos); 
- 
+    float y = getNumberOfPeople();
     for (int j = 0; j < y; j++) {
       drawCircle(j*200);
     }
@@ -98,11 +96,10 @@ void draw() {
     
   
   xPos += xSpeed;
-  
+     popMatrix();
    // Change textLabel's label to current peopleCount
-   popMatrix();
-   //cp5.getController("people").setPosition(100,50);
-   //cp5.getController("people").setValueLabel("People count " + peopleCount + "");
+   cp5.getController("people").setPosition(100,50);
+   cp5.getController("people").setValueLabel("People count " + peopleCount + "");
 }
 
 
