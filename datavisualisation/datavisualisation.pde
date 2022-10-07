@@ -3,12 +3,26 @@ import controlP5.*;
 
 ControlP5 gui;
 
-int hour;
-int minute;
 String time;
-int timer;
+
+int hour;
 String paddedHour = "00";
+
+int minute;
 String paddedMinute = "00";
+
+String date;
+
+int day;
+String paddedDay = "01";
+
+int month;
+String paddedMonth = "01";
+
+int year;
+
+int timer;
+
 Boolean pause;
 float sliderValue;
 float parsedMinute;
@@ -45,6 +59,10 @@ void setup() {
  
  hour = 0;
  minute = 0;
+ 
+ day = 1;
+ month = 1;
+ year = 2021;
   
 }
 
@@ -89,6 +107,11 @@ void draw() {
   //time
   time = paddedHour + ":" + paddedMinute;
   text(time, 770, 100);
+  
+  textSize(40);
+  
+  date = paddedDay + "/" + paddedMonth + "/" + year;
+  text(date, 770, 150);
   
   //timeline scale numbers
   textSize(15);
