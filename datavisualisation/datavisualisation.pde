@@ -324,10 +324,9 @@ void dayBack(){
 
 void updateTimeline() {
   float pixel;
-  
   pixel = minute * 0.5333333333;
   pixel += hour * 60*0.5333333333;
-  System.out.println(pixel);
+  System.out.println("timeline location: " + pixel);
   
   fill(7, 151, 216);
   rect(66, 660, 66+pixel, 680); 
