@@ -110,6 +110,7 @@ void draw() {
   text(date, 770, 150);
  
   if (millis()-timer > 1000) {
+    updateTimeline();
     //every 1 second, format the time and the date, update the timeline, reset the timer
     if (hour == 23 && minute == 59) {
       //reset to 00:00
@@ -129,7 +130,7 @@ void draw() {
     
     formatTime();
     formatDate();
-    updateTimeline();
+    
     timer = millis();
   }
   
@@ -326,7 +327,7 @@ void updateTimeline() {
   
   pixel = minute * 0.5333333333;
   pixel += hour * 60*0.5333333333;
-  //System.out.println(pixel);
+  System.out.println(pixel);
   
   fill(7, 151, 216);
   rect(66, 660, 66+pixel, 680); 
