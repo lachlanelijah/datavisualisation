@@ -82,8 +82,8 @@ void setup() {
    
  ;
  
- hour = 0;
- minute = 0;
+ hour = 23;
+ minute = 57;
  
  day = 1;
  month = 1;
@@ -108,37 +108,40 @@ void draw() {
   
   date = paddedDay + "/" + paddedMonth + "/" + year;
   text(date, 770, 150);
-  
+ 
   if (millis()-timer > 1000) {
-    //every 1 second, format the time, the date, update the timeline, reset the timer
+    //every 1 second, format the time and the date, update the timeline, reset the timer
+    if (hour == 23 && minute == 59) {
+      //reset to 00:00
+      hour = 0;
+      minute = 0;
+      paddedMinute = "00";
+      paddedHour = "00";
+      dayForward();
+    } else if (minute < 59) {
+      minute += 1;
+    } else if (minute == 59) {
+      //minute rollover
+      minute = 0;
+      paddedMinute = "00";
+      hour += 1;
+    }
+    
     formatTime();
     formatDate();
     updateTimeline();
     timer = millis();
-    if (hour == 23 && minute == 59) {
-      //reset to 00:00
-      hour = 0;
-      minute = -1;
-    } else if (minute < 59) {
-      minute += 1;
-      paddedMinute = String.format("%02d", minute);
-      paddedHour = String.format("%02d", hour);
-    } else if (minute == 59) {
-      //minute rollover
-      minute = -1;
-      hour += 1;
-    }
   }
-  
-  
   
 }
 
 void formatTime() {
   int minuteCheck = Integer.parseInt(paddedMinute);
   int hourCheck = Integer.parseInt(paddedHour);
-  System.out.println("min:" + minute);
+  System.out.println("min: " + minute);
   System.out.println("hour: " + hour);
+  System.out.println("minuteCheck: " + minuteCheck);
+  System.out.println("hourCheck: " + hourCheck);
   
   if (minuteCheck <= 9 && hourCheck <= 9) {
     paddedMinute = String.format("%02d", minute);
@@ -146,20 +149,32 @@ void formatTime() {
     time = paddedHour + ":" + paddedHour;
   } else if (minuteCheck <= 9 && hourCheck > 9) {
     paddedMinute = String.format("%02d", minute);
+    paddedHour = Integer.toString(hour);
     time = paddedHour + ":" + paddedMinute;
   } else if (minuteCheck > 9 && hourCheck <= 9) {
+    paddedMinute = Integer.toString(minute);
     paddedHour = String.format("%02d", hour);
     time = paddedHour + ":" + minute;
+  } else {
+    //if (minute == 0) {
+    //  paddedMinute = "00";
+    //}
+    //if (hour == 0) {
+    //  paddedHour = "00";
+    //}
+    
+    paddedMinute = Integer.toString(minute);
+    paddedHour = Integer.toString(hour);
   }
 }
 
 void formatDate() {
   int dayCheck = Integer.parseInt(paddedDay);
   int monthCheck = Integer.parseInt(paddedMonth);
-  System.out.println("dayCheck: " + dayCheck);
-  System.out.println("monthCheck: " + monthCheck);
-  System.out.println("day:" + day);
-  System.out.println("month: " + month);
+  //System.out.println("dayCheck: " + dayCheck);
+  //System.out.println("monthCheck: " + monthCheck);
+  //System.out.println("day:" + day);
+  //System.out.println("month: " + month);
   
  if (dayCheck <= 9 && monthCheck <= 9) {
     paddedDay = String.format("%02d", day);
@@ -175,8 +190,8 @@ void formatDate() {
     date = paddedDay + "/" + paddedMonth + "/" + year;
   }
   
-  System.out.println("padDay: " + paddedDay);
-  System.out.println("padMonth: " + paddedMonth);
+  //System.out.println("padDay: " + paddedDay);
+  //System.out.println("padMonth: " + paddedMonth);
 }
 
 
