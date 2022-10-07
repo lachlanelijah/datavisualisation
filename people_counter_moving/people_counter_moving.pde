@@ -9,9 +9,10 @@ float xSpeed = 5;
 
 float spacing = 0;
 
-String currentTime = "18:55:00";
+String currentTime = "13:00:00";
 
 int peopleCount = 0;
+int sum = 0;
 
 
 
@@ -21,12 +22,12 @@ Textlabel myTextlabelA;
 
 void setup() {
   size(800, 800);
-  xy = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2022-09-15T18%3A41%3A32&rToDate=2022-09-17T18%3A41%3A32&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+In", "csv");
+  xy = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2022-10-05T12%3A19%3A24&rToDate=2022-10-07T12%3A19%3A24&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+In", "csv");
   cp5 = new ControlP5(this);
   
   frameRate(80);
 
-  List l = Arrays.asList("18:55:00", "b", "c", "d");
+  List l = Arrays.asList("6:00-7:00am", "12:00-1:00pm", "8:00-9:00pm");    
   d1 =cp5.addScrollableList("dropdown")
     .setPosition(100, 100)
     .setSize(200, 100)
@@ -53,15 +54,16 @@ void dropdown(int n) {
 
 
   CColor c = new CColor();
-  c.setBackground(color(255, 0, 0));
+  c.setBackground(color(255, 255, 0));
   cp5.get(ScrollableList.class, "dropdown").getItem(n).put("color", c);
 
 }
 
 float getNumberOfPeople() {
   // For all of the columns in the first row, get the date and check if the date contains the currentTime selected and return it
-  for (int i = 0; i< xy.getColumnCount(); i++) {
-    String date = xy.getString(i, 0);
+  String date;
+  for (int i = 0; i< xy.getRowCount(); i++) {
+    date = xy.getString(i, 0);
     if (date.contains(currentTime)) {
       peopleCount = xy.getInt(i, 1);
       return xy.getFloat(i, 1);
@@ -70,25 +72,57 @@ float getNumberOfPeople() {
   return 0;
 }
 
+  float getNumberOfPeopleInAHour(String currentSelectedTime){ //<>//
+    if(currentSelectedTime.equals("6:00-7:00am")){ //<>//
+       String date;
+      String startTime = "6:00:00";
+      String endTime = "7:00:00";
+      
+      int startRow = 0;
+      int lastRow = 0;
+      
+       for (int i = 0; i< xy.getRowCount(); i++) { //<>//
+    date = xy.getString(i, 0); //<>//
+    if (date.contains(startTime) && (!date.contains("16:00:00")) ){ //<>//
+      startRow = i; //<>//
+      break; //<>//
+     }
+   }
+    
+         for (int i = 0; i< xy.getRowCount(); i++) { //<>//
+    date = xy.getString(i, 0); //<>//
+    if (date.contains(endTime)) {      //<>//
+      lastRow = i; //<>//
+      break; //<>//
+    }
+    }
+    
+    for(int i = startRow; i <= lastRow; i++){  //<>//
+        sum += xy.getInt(i, 1); //<>//
+    }
+      
+    }
+    peopleCount = sum;
+    return sum;
+      
+  
+
+
+  
+  }
+
 
 
 void draw() {
   background(225);
   pushMatrix();
 
-  //translate(xPos,yPos); 
-    float y = getNumberOfPeople();
+    float y = getNumberOfPeopleInAHour("6:00-7:00am");
     for (int j = 0; j < y; j++) {
       drawCircle(j*200);
     }
   
-    //for (int i = 0; i<6; i++) {
-    //float y= 6;
-    //peopleCount = 6;
-    //for (int j = 0; j < y; j++) {
-    //  drawCircle(j*200);
-     
-    //}
+
     
     
      
