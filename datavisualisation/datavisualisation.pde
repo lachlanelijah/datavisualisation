@@ -82,8 +82,8 @@ void setup() {
    
  ;
  
- hour = 23;
- minute = 57;
+ hour = 0;
+ minute = 0;
  
  day = 1;
  month = 1;
