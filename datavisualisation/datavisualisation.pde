@@ -56,6 +56,31 @@ void setup() {
    .setValue(0)
    .setImages(forwardImg)
  ;
+ gui.addButton("monthForward")
+   .setLabel("month ->")
+   .setValue(0)
+   .setPosition(830, 170)
+   .setSize(40, 30)
+ ;
+ gui.addButton("monthBack")
+   .setLabel("<- month")
+   .setValue(0)
+   .setPosition(680, 170)
+   .setSize(40, 30)
+ ;
+ gui.addButton("dayForward")
+   .setLabel("day ->")
+   .setValue(0)
+   .setPosition(780, 170)
+   .setSize(40, 30)
+ ;
+ gui.addButton("dayBack")
+   .setLabel("<- day")
+   .setValue(0)
+   .setPosition(730, 170)
+   .setSize(40, 30)
+   
+ ;
  
  hour = 0;
  minute = 0;
