@@ -23,7 +23,6 @@ void setup() {
   size(800, 800);
   xy = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2022-10-05T12%3A19%3A24&rToDate=2022-10-07T12%3A19%3A24&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+In", "csv");
   cp5 = new ControlP5(this);
-
   frameRate(80);
 
   List l = Arrays.asList("6:00-7:00am", "12:00-1:00pm", "8:00-9:00pm");    
