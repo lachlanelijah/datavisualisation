@@ -219,6 +219,67 @@ void back() {
  }
 }
 
+void monthForward(){
+  if (month >= 1 && month < 12) {
+    month += 1;
+  }
+  
+  if (month == 12) {
+    month = 1;
+  }
+}
+
+void monthBack(){
+  if (month >= 1 && month < 12) {
+    month -= 1;
+  }
+  
+  if (month == 1) {
+    month = 12;
+  }
+}
+//january, march, may, july, aug, oct, dec 31
+//feb 28
+// april, june, september, november 30
+void dayForward(){
+  
+  Boolean monthCheck = false;
+  
+  if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+    if (day < 31) {
+      day+= 1;
+    } else {
+      day = 1;
+      month += 1;
+      monthCheck = true;
+    }
+  } else if (month == 2) {
+    if (day < 28) {
+      day += 1;
+    } else {
+      day = 1;
+      month += 1;
+      monthCheck = true;
+    }
+  } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+    if (day < 30) {
+      day += 1;
+    } else {
+      day = 1;
+      month += 1;
+      monthCheck = true;
+    }
+  }
+  
+  if (monthCheck == true && month == 13) {
+    month = 1;
+  }
+}
+
+void dayBack(){
+  
+}
+
 void updateTimeline() {
   float pixel;
   
