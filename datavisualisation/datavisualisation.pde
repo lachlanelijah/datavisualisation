@@ -23,6 +23,7 @@ String paddedMonth = "01";
 int year;
 
 int timer;
+int datatimer;
 
 Boolean pause;
 float sliderValue;
@@ -30,6 +31,8 @@ float parsedMinute;
 PFont montserrat;
 
 Table xy;
+
+int fromRow;
 
 //float xPos = 899;
 //float xSpeed = 5;
@@ -58,6 +61,7 @@ void setup() {
   background(178, 224, 245);
   frameRate(60);
   timer = millis();
+  datatimer = millis();
 
   gui.addButton("back")
     .setPosition(10, 660)
@@ -125,7 +129,16 @@ void draw() {
 
   date = paddedDay + "-" + paddedMonth + "-" + year;
   text(date, 770, 150);
-  drawPeople();
+  if (millis()-datatimer < 5000) {
+    
+    drawPeople(false);
+    //datatimer = millis();
+  }
+  if (millis()-datatimer > 5000) {
+    
+    drawPeople(true);
+    datatimer = millis();
+  }
 
 
   //String fullDate =  "2021-10-14 09:50:00";
@@ -175,24 +188,32 @@ float numberOfPeopleDuringCurrentTime() {
 
   return 0;
 }
-void drawPeople() {
-  float peopleComingIn=5;
-  if (peoples.size() != peopleComingIn) {
-    for (int j = 0; j < peopleComingIn; j++) {
-      peoples.add(new People(j*200));
+void drawPeople(Boolean fuck) {
+  //if (xy.getInt(
+  //peopleComingIn=
+  float peopleComingIn=34;
+  if (!fuck) {
+    if (peoples.size() != peopleComingIn) {
+      for (int j = 0; j < peopleComingIn; j++) {
+        peoples.add(new People(j*200));
+      }
     }
+    
+    for (People people : peoples) {
+      people.drawCircle();
+      people.decreaseSpeed(peopleComingIn);
+    }
+  } else if (fuck) {
+    //peoples = new LinkedList<People>();
+    peoples.clear();
   }
 
-  for (People people : peoples) {
-    people.drawCircle();
-  }
 
+  //for (People people : peoples) {
+    //System.out.println(people.xPos);
 
-  for (People people : peoples) {
-    System.out.println(people.xPos);
-
-    people.decreaseSpeed();
-  }
+    //people.decreaseSpeed();
+  //}
 }
 
 

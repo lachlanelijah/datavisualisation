@@ -11,10 +11,13 @@ class People{
   void drawCircle(){
      fill(#FF0808);
      circle(xPos+spacing, height-220, 65);
+     
+     //circle((speedo*175)+spacing, height-220, 65);
   }
   
-  void decreaseSpeed(){
-    xPos -= 7;
+  void decreaseSpeed(float speedo){
+    //xPos -= 7;
+    xPos -= speedo + 1;
     
     
   }
