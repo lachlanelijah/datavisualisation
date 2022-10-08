@@ -34,6 +34,9 @@ Table xy;
 
 int fromRow;
 
+float peopleComingIn=0;
+//Boolean gotPeople = false;
+
 //float xPos = 899;
 //float xSpeed = 5;
 
@@ -129,15 +132,19 @@ void draw() {
 
   date = paddedDay + "-" + paddedMonth + "-" + year;
   text(date, 770, 150);
+  
   if (millis()-datatimer < 5000) {
-    
-    drawPeople(false);
+    //if (millis()-datatimer > 1000) {
+      drawPeople(false);
+    //}
+    //drawPeople(false);
     //datatimer = millis();
+    //println("keep it running...");
   }
   if (millis()-datatimer > 5000) {
-    
     drawPeople(true);
     datatimer = millis();
+    println("checking count...");
   }
 
 
@@ -188,32 +195,41 @@ float numberOfPeopleDuringCurrentTime() {
 
   return 0;
 }
-void drawPeople(Boolean fuck) {
-  //if (xy.getInt(
-  //peopleComingIn=
-  float peopleComingIn=34;
-  if (!fuck) {
-    if (peoples.size() != peopleComingIn) {
-      for (int j = 0; j < peopleComingIn; j++) {
-        peoples.add(new People(j*200));
+void drawPeople(Boolean fiveSec) {
+  Boolean gotPeople = false;
+  for (int i = 0; i < xy.getRowCount(); i++) {
+    String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
+    if (xy.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
+      println("got people.");
+      println(xy.getString(i, 0));
+      println(xy.getInt(i, 1));
+      peopleComingIn=xy.getInt(i, 1);
+      gotPeople = true;
+    }
+  }
+  
+  if (!fiveSec) {
+    if (gotPeople) {
+      if (peoples.size() != peopleComingIn) {
+        for (int j = 0; j < peopleComingIn; j++) {
+          peoples.add(new People(j*200));
+        }
       }
     }
-    
+      
     for (People people : peoples) {
       people.drawCircle();
       people.decreaseSpeed(peopleComingIn);
     }
-  } else if (fuck) {
+  } else if (fiveSec) {
     //peoples = new LinkedList<People>();
-    peoples.clear();
+    if (gotPeople) {
+      peoples.clear();
+      gotPeople = false;
+    } else {
+      peoples.clear();
+    }
   }
-
-
-  //for (People people : peoples) {
-    //System.out.println(people.xPos);
-
-    //people.decreaseSpeed();
-  //}
 }
 
 
@@ -316,6 +332,7 @@ void drawPeople(Boolean fuck) {
       hour = 0;
       minute = -1;
     }
+    datatimer = millis() + 600;
   }
 
   void back() {
@@ -327,6 +344,7 @@ void drawPeople(Boolean fuck) {
       hour -= 1;
       minute = -1;
     }
+    datatimer = millis() + 600;
   }
 
   void monthForward() {
@@ -339,6 +357,7 @@ void drawPeople(Boolean fuck) {
       month = 1;
       day = 1;
     }
+    datatimer = millis() + 600;
   }
 
   void monthBack() {
@@ -351,6 +370,7 @@ void drawPeople(Boolean fuck) {
       month = 12;
       day = 1;
     }
+    datatimer = millis() + 600;
   }
   //january, march, may, july, aug, oct, dec 31
   //feb 28
@@ -388,6 +408,7 @@ void drawPeople(Boolean fuck) {
     if (monthCheck == true && month > 12) {
       month = 1;
     }
+    datatimer = millis() + 600;
   }
 
   void dayBack() {
@@ -430,6 +451,7 @@ void drawPeople(Boolean fuck) {
     } else {
       day -= 1;
     }
+    datatimer = millis() + 600;
   }
 
   void updateTimeline() {
