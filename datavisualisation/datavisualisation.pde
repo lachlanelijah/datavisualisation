@@ -28,6 +28,8 @@ float sliderValue;
 float parsedMinute;
 PFont montserrat;
 
+String screen;
+
 void setup() {
   
   PImage[] forwardImg = {loadImage("data/forward.png"), loadImage("data/forward_hover.png"), loadImage("")};
@@ -79,7 +81,18 @@ void setup() {
    .setValue(0)
    .setPosition(730, 170)
    .setSize(40, 30)
-   
+ ;
+ gui.addButton("screen1")
+   .setLabel("Screen 1")
+   .setValue(0)
+   .setPosition(0, 0)
+   .setSize(100, 40)
+ ;
+ gui.addButton("screen2")
+   .setLabel("Screen 2")
+   .setValue(0)
+   .setPosition(100, 0)
+   .setSize(100, 40)
  ;
  
  hour = 0;
@@ -88,14 +101,23 @@ void setup() {
  day = 1;
  month = 1;
  year = 2021;
+ 
+ screen = "1";
   
 }
 
 void draw() {
   background(178, 224, 245);
   
-  drawScenery();
+  if (screen == "1") {
+  drawScreen1Scenery();
+  } else {
+   //drawScreen2Scenery(); 
+  }
   drawScaleNumbers();
+  
+  fill(62, 195, 255); //timeline light blue
+  rect(66, 660, 834, 680); 
 
   fill(0);
   textAlign(CENTER);
@@ -280,6 +302,14 @@ void dayForward(){
   }
 }
 
+void screen1(){
+  screen = "1";
+}
+
+void screen2(){
+  screen = "2";
+}
+
 void dayBack(){
   if (month == 1 && day == 1) {
     month = 12;
@@ -332,7 +362,7 @@ void updateTimeline() {
   rect(66, 660, 66+pixel, 680); 
 }
 
-void drawScenery() {
+void drawScreen1Scenery() {
   fill (59,59,59); //ground
   quad(0, 440, width, 440, width, height, 0, height);
   
