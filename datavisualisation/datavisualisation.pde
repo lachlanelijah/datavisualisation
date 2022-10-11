@@ -72,7 +72,7 @@ void setup() {
     .setSize(46, 20)
     .setValue(0)
     .setImages(backImg)
-    ;
+  ;
   gui.addButton("forward")
     .setPosition(844, 660)
     .setSize(46, 20)
@@ -84,19 +84,19 @@ void setup() {
     .setValue(0)
     .setPosition(830, 170)
     .setSize(40, 30)
-    ;
+  ;
   gui.addButton("monthBack")
     .setLabel("<- month")
     .setValue(0)
     .setPosition(680, 170)
     .setSize(40, 30)
-    ;
+  ;
   gui.addButton("dayForward")
     .setLabel("day ->")
     .setValue(0)
     .setPosition(780, 170)
     .setSize(40, 30)
-    ;
+  ;
   gui.addButton("dayBack")
     .setLabel("<- day")
     .setValue(0)
@@ -212,6 +212,7 @@ float numberOfPeopleDuringCurrentTime() {
 
   return 0;
 }
+
 void drawPeople(Boolean fiveSec) {
   Boolean gotPeople = false;
   for (int i = 0; i < xy.getRowCount(); i++) {
@@ -312,31 +313,30 @@ void drawPeople(Boolean fiveSec) {
     }
   }
 
-  void formatDate() {
-    int dayCheck = Integer.parseInt(paddedDay);
-    int monthCheck = Integer.parseInt(paddedMonth);
-    //System.out.println("dayCheck: " + dayCheck);
-    //System.out.println("monthCheck: " + monthCheck);
-    //System.out.println("day:" + day);
-    //System.out.println("month: " + month);
+void formatDate() {
+  int dayCheck = Integer.parseInt(paddedDay);
+  int monthCheck = Integer.parseInt(paddedMonth);
+  //System.out.println("dayCheck: " + dayCheck);
+  //System.out.println("monthCheck: " + monthCheck);
+  //System.out.println("day:" + day);
+  //System.out.println("month: " + month);
 
-    if (dayCheck <= 9 && monthCheck <= 9) {
-      paddedDay = String.format("%02d", day);
-      paddedMonth = String.format("%02d", month);
-      date = paddedDay + "/" + paddedMonth + "/" + year;
-    } else if (dayCheck <= 9 && monthCheck > 9) {
-      paddedDay = String.format("%02d", day);
-      paddedMonth = Integer.toString(month);
-      date = paddedDay + "/" + paddedMonth + "/" + year;
-    } else if (dayCheck > 9 && monthCheck <= 9) {
-      paddedMonth = String.format("%02d", month);
-      paddedDay = Integer.toString(day);
-      date = paddedDay + "/" + paddedMonth + "/" + year;
-    }
-
+  if (dayCheck <= 9 && monthCheck <= 9) {
+    paddedDay = String.format("%02d", day);
+    paddedMonth = String.format("%02d", month);
+    date = paddedDay + "/" + paddedMonth + "/" + year;
+  } else if (dayCheck <= 9 && monthCheck > 9) {
+    paddedDay = String.format("%02d", day);
+    paddedMonth = Integer.toString(month);
+    date = paddedDay + "/" + paddedMonth + "/" + year;
+  } else if (dayCheck > 9 && monthCheck <= 9) {
+    paddedMonth = String.format("%02d", month);
+    paddedDay = Integer.toString(day);
+    date = paddedDay + "/" + paddedMonth + "/" + year;
+  }
     //System.out.println("padDay: " + paddedDay);
     //System.out.println("padMonth: " + paddedMonth);
-  }
+}
 
 
   void forward() {
@@ -378,7 +378,7 @@ void drawPeople(Boolean fiveSec) {
   }
 
   void monthBack() {
-    if (month >= 1 && month < 12) {
+    if (month > 1 && month <= 12) {
       month -= 1;
       day = 1;
     }
@@ -394,15 +394,15 @@ void drawPeople(Boolean fiveSec) {
   // april, june, september, november 30
   void dayForward() {
 
-    Boolean monthCheck = false;
+    //Boolean monthCheck = false;
 
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) {
       if (day < 31) {
         day+= 1;
       } else {
         day = 1;
         month += 1;
-        monthCheck = true;
+        //monthCheck = true;
       }
     } else if (month == 2) {
       if (day < 28) {
@@ -410,7 +410,7 @@ void drawPeople(Boolean fiveSec) {
       } else {
         day = 1;
         month += 1;
-        monthCheck = true;
+        //monthCheck = true;
       }
     } else if (month == 4 || month == 6 || month == 9 || month == 11) {
       if (day < 30) {
@@ -418,13 +418,16 @@ void drawPeople(Boolean fiveSec) {
       } else {
         day = 1;
         month += 1;
-        monthCheck = true;
+        //monthCheck = true;
       }
+    } else if (month == 12) {
+     day = 1;
+     month = 1;
     }
 
-    if (monthCheck == true && month > 12) {
-      month = 1;
-    }
+    //if (monthCheck == true && month > 12) {
+    //  month = 1;
+    //}
     datatimer = millis() + 600;
   }
 
@@ -465,8 +468,10 @@ void drawPeople(Boolean fiveSec) {
     } else if (month == 12 && day == 1) {
       month = 11;
       day = 30;
+    } else if (day == 1){
+      
     } else {
-      day -= 1;
+     day -= 1; 
     }
     datatimer = millis() + 600;
   }
