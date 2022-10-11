@@ -135,10 +135,8 @@ void draw() {
   } else {
    //drawScreen2Scenery(); 
   }
+  
   drawScaleNumbers();
-  drawScaleNumbers();
-
-
 
   fill(0);
   textAlign(CENTER);
@@ -146,7 +144,6 @@ void draw() {
 
   time = paddedHour + ":" + paddedMinute;
   text(time, 770, 100);
-
 
   textSize(40);
 
