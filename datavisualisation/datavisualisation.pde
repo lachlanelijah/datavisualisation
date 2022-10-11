@@ -46,6 +46,7 @@ float peopleComingIn=0;
 //float dateRow = -1;
 LinkedList<People> peoples = new LinkedList<People>();
 
+String screen;
 
 void setup() {
 
@@ -101,8 +102,20 @@ void setup() {
     .setValue(0)
     .setPosition(730, 170)
     .setSize(40, 30)
-
-    ;
+  ;
+    
+  gui.addButton("screen1")
+   .setLabel("Screen 1")
+   .setValue(0)
+   .setPosition(0, 0)
+   .setSize(100, 40)
+ ;
+ gui.addButton("screen2")
+   .setLabel("Screen 2")
+   .setValue(0)
+   .setPosition(100, 0)
+   .setSize(100, 40)
+ ;
 
   hour = 0;
   minute = 0;
@@ -110,12 +123,19 @@ void setup() {
   day = 1;
   month = 1;
   year = 2021;
+  
+  screen = "1";
 }
 
 void draw() {
   background(178, 224, 245);
 
-  drawScenery();
+  if (screen == "1") {
+  drawScreen1Scenery();
+  } else {
+   //drawScreen2Scenery(); 
+  }
+  drawScaleNumbers();
   drawScaleNumbers();
 
 
@@ -464,7 +484,7 @@ void drawPeople(Boolean fiveSec) {
     rect(66, 660, 66+pixel, 680);
   }
 
-  void drawScenery() {
+  void drawScreen1Scenery() {
     fill (59, 59, 59); //ground
     quad(0, 440, width, 440, width, height, 0, height);
 
@@ -497,7 +517,7 @@ void drawPeople(Boolean fiveSec) {
     rect(66, 660, 834, 680);
   }
 
-  void drawScaleNumbers() {
+void drawScaleNumbers() {
     textSize(15);
     fill(255, 255, 255);
     text(0, 66, 695);
@@ -510,3 +530,11 @@ void drawPeople(Boolean fiveSec) {
     text(21, 738, 695);
     text(24, 834, 695);
   }
+  
+void screen1(){
+  screen = "1";
+}
+
+void screen2(){
+  screen = "2";
+}
