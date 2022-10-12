@@ -133,9 +133,11 @@ void draw() {
   if (screen == "1") {
   drawScreen1Scenery();
   } else {
-   //drawScreen2Scenery(); 
+   drawScreen2Scenery(); 
   }
   
+  fill(62, 195, 255); //timeline light blue
+  rect(66, 660, 834, 680);
   drawScaleNumbers();
 
   fill(0);
@@ -486,42 +488,81 @@ void formatDate() {
     rect(66, 660, 66+pixel, 680);
   }
 
-  void drawScreen1Scenery() {
-    fill (59, 59, 59); //ground
-    quad(0, 440, width, 440, width, height, 0, height);
+void drawScreen1Scenery() {
+  
+  fill (59, 59, 59); //ground
+  quad(0, 440, width, 440, width, height, 0, height);
 
-    fill(7, 151, 216); // left glass (darker)
-    quad(0, 400, 0, 515, 100, 510, 100, 200);
+  fill(7, 151, 216); // left glass (darker)
+  quad(0, 400, 0, 515, 100, 510, 100, 200);
 
-    fill(201, 201, 181); //building 10 back
-    quad(485, 0, 485, 470, 300, 460, 0, 0);
+  fill(201, 201, 181); //building 10 back
+  quad(485, 0, 485, 470, 300, 460, 0, 0);
 
-    fill(34, 139, 71);  //hedge left
-    quad(450, 475, 300, 465, 300, 230, 450, 220);
+  fill(34, 139, 71);  //hedge left
+  quad(450, 475, 300, 465, 300, 230, 450, 220);
 
-    fill(40, 173, 87);//hedge right
-    quad(450, 220, 475, 222, 475, 473, 450, 475);
+  fill(40, 173, 87);//hedge right
+  quad(450, 220, 475, 222, 475, 473, 450, 475);
 
-    fill(62, 195, 255); //right glass
-    quad(100, 510, 300, 475, 400, 0, 100, 200);
+  fill(62, 195, 255); //right glass
+  quad(100, 510, 300, 475, 400, 0, 100, 200);
 
-    fill(144, 144, 144); //back facade
-    quad(440, 0, 400, 480, 300, 475, 300, 0);
+  fill(144, 144, 144); //back facade
+  quad(440, 0, 400, 480, 300, 475, 300, 0);
 
-    fill(193, 193, 193); //facade
-    quad(0, 0, 0, 400, 350, 300, 400, 0);
+  fill(193, 193, 193); //facade
+  quad(0, 0, 0, 400, 350, 300, 400, 0);
 
-    fill(226, 227, 206); //building 10 front
-    beginShape();
-    quad(485, 0, 485, 470, 640, 452, 640, 0);
+  fill(226, 227, 206); //building 10 front
+  quad(485, 0, 485, 470, 640, 452, 640, 0);
 
-    fill(62, 195, 255); //timeline light blue
-    rect(66, 660, 834, 680);
-  }
+    
+}
+  
+void drawScreen2Scenery(){
+  fill(222,222,222); //top lighter grey concrete
+  quad(300,0, 400, 0, 560, 100, 560, 300);
+  
+  fill(200,200,200);//top darker grey concrete
+  quad(0,0, 300, 0, 600, 165, 0, height);
+  
+  fill(80,45,45); //maroon bar top
+  quad(560, 100, width, 85, width, 130, 560, 144);
+  
+  fill(57,32,32); //maroon bar bottom
+  quad(560,144, width, 130, width, 145, 590, 160);
+  
+  fill(173,173,173); //floor
+  quad(0, 350, width, 350, width, height, 0, height);
+  
+  fill (75,63,63); //mat in front of door
+  quad(375,480, width, 490, width, 540, 200, 530);
+
+  fill(155, 86, 52); //brown left side wall
+  quad(0,0, 375,150, 375,500, 0,600);
+  
+  fill(134, 222, 255); //glass
+  quad(375,165, width,145, width, 490, 375, 480);
+  
+  fill(130, 130, 130); //pillar left 
+  quad(415,150, 455,143, 455,505, 415, 500);
+  
+  fill(143, 143, 143); //pillar right
+  quad(455,143, 485,150, 485, 500, 455, 505);
+  rectMode(CORNERS);
+  fill(255);
+  rect(660, 30, 880, 210);
+  
+}
 
 void drawScaleNumbers() {
     textSize(15);
+    if (screen == "1") {
     fill(255, 255, 255);
+    } else {
+     fill(0); 
+    }
     text(0, 66, 695);
     text(3, 162, 695);
     text(6, 258, 695);
