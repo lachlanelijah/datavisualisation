@@ -31,6 +31,7 @@ float parsedMinute;
 PFont montserrat;
 
 Table xy;
+Table xz;
 Table yz;
 
 int fromRow;
@@ -56,6 +57,7 @@ void setup() {
   PImage[] backImg = {loadImage("data/back.png"), loadImage("data/back_hover.png"), loadImage("")};
   // Data from 01/1/2021 to 01/01/2022
   xy = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T01%3A00%3A54&rToDate=2022-01-01T01%3A00%3A35.151&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+In", "csv");
+  xz = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T01%3A00%3A54&rToDate=2022-01-01T01%3A00%3A35.151&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+Out", "csv");
   yz = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T00%3A00&rToDate=2022-01-01T00%3A00&rFamily=weather&rSensor=SV", "csv");
 
   montserrat = createFont("Montserrat-Medium.ttf", 75);
@@ -135,8 +137,10 @@ void draw() {
 
   if (screen == "1") {
   drawScreen1Scenery();
+  
   } else {
    drawScreen2Scenery(); 
+   
   }
   
   fill(62, 195, 255); //timeline light blue
@@ -222,12 +226,25 @@ void drawPeople(Boolean fiveSec) {
   Boolean gotPeople = false;
   for (int i = 0; i < xy.getRowCount(); i++) {
     String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
-    if (xy.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
-      println("got people.");
-      println(xy.getString(i, 0));
-      println(xy.getInt(i, 1));
-      peopleComingIn=xy.getInt(i, 1);
-      gotPeople = true;
+    switch (screen) {
+      case "1":
+        if (xy.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
+          println("got people.");
+          //println(xy.getString(i, 0));
+          //println(xy.getInt(i, 1));
+          peopleComingIn=xy.getInt(i, 1);
+          gotPeople = true;
+        }
+        break;
+      case "2":
+        if (xz.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
+          println("got people.");
+          //println(xy.getString(i, 0));
+          //println(xy.getInt(i, 1));
+          peopleComingIn=xz.getInt(i, 1);
+          gotPeople = true;
+        }
+        break;
     }
   }
   
@@ -238,14 +255,22 @@ void drawPeople(Boolean fiveSec) {
           peoples.add(new People(j*200));
         }
       }
+      gotPeople = false;
     }
       
     for (People people : peoples) {
-      people.drawCircle();
-      people.decreaseSpeed(peopleComingIn);
+      switch (screen) {
+        case "1":
+          people.drawCircle(1);
+          people.decreaseSpeed1(peopleComingIn);
+          break;
+        case "2":
+          people.drawCircle(2);
+          people.decreaseSpeed2(peopleComingIn);
+          break;
+      }
     }
   } else if (fiveSec) {
-    //peoples = new LinkedList<People>();
     if (gotPeople) {
       peoples.clear();
       gotPeople = false;
@@ -325,6 +350,7 @@ void formatDate() {
       minute = -1;
     }
     datatimer = millis() + 600;
+    drawPeople(true);
   }
 
   void back() {
@@ -337,6 +363,7 @@ void formatDate() {
       minute = -1;
     }
     datatimer = millis() + 600;
+    drawPeople(true);
   }
 
   void monthForward() {
@@ -492,8 +519,6 @@ void drawScreen1Scenery() {
   
   Sun sun = new Sun();
   Boolean sunnyD = false;
-  //
-  //println("drawwwwwwwwwwwww");
   for (int i = 0; i < yz.getRowCount(); i++) {
     String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
     if (yz.getString(i, 0).contains(dateAPI + " " + time)) {
@@ -512,6 +537,23 @@ void drawScreen1Scenery() {
 }
   
 void drawScreen2Scenery(){
+  Sun sun = new Sun();
+  Boolean sunnyD = false;
+  for (int i = 0; i < yz.getRowCount(); i++) {
+    String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
+    if (yz.getString(i, 0).contains(dateAPI + " " + time)) {
+      sunVolt=yz.getFloat(i, 1);
+      sunnyD = true;
+      println(sunVolt);
+    }
+  }
+  if (sunnyD) {
+    sun.drawSun(sunVolt, 2);
+    sunnyD = false;
+  } else if (!sunnyD) {
+    sun.drawSun(sunVolt, 2);
+  }
+  
   fill(222,222,222); //top lighter grey concrete
   quad(300,0, 400, 0, 560, 100, 560, 300);
   
@@ -567,8 +609,12 @@ void drawScaleNumbers() {
   
 void screen1(){
   screen = "1";
+  drawPeople(true);
+  datatimer = millis();
 }
 
 void screen2(){
   screen = "2";
+  drawPeople(true);
+  datatimer = millis();
 }

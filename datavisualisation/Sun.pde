@@ -47,16 +47,15 @@ class Sun{
         //println("Voltage1: " + sun.getInt(counter, 1));
         // background(nightRed, nightGreen, nightBlue);
         fill(nightRed *(12 - diff)/12, nightGreen *(12 - diff)/12, nightBlue *(12 - diff)/12);
-        quad(640, 0, 640, 440, 900, 440, 900, 0);
         switch (scene) {
           case 1:
             quad(640, 0, 640, 440, 900, 440, 900, 0);
             break;
           case 2:
-            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
             break;
         }
-        println("Dark blue");
+        //println("Dark blue");
         test = 1;
     }
     
@@ -64,9 +63,16 @@ class Sun{
     else if (voltage >= 4 && voltage < 7) {
         //println("sun.getInt: " + sun.getInt(counter, 1));
         diff = diff * -1;
-        fill( (nightRed+goldenRed)/2 * (12 - diff)/12, (nightGreen+goldenGreen)/2 * (12 - diff)/12, (nightBlue+goldenBlue)/2 * (12 - diff)/12);
-        // background(goldenRed, goldenGreen, goldenBlue);
-        println("Orangish");
+        fill((nightRed+goldenRed)/2 * (12 - diff)/12, (nightGreen+goldenGreen)/2 * (12 - diff)/12, (nightBlue+goldenBlue)/2 * (12 - diff)/12);
+        switch (scene) {
+          case 1:
+            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            break;
+          case 2:
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
+            break;
+        }
+        //println("Orangish");
         diff = diff * -1;
         test = 2;
     }
@@ -75,8 +81,15 @@ class Sun{
     else if (voltage >= 7 && voltage <= 11) {
         //println("sun.getInt: " + sun.getInt(counter, 1));
         fill((earlyRed+goldenRed)/2 * (12 - diff)/12, (earlyGreen+goldenGreen)/2 * (12 - diff)/12, (earlyBlue+goldenBlue)/2 * (12 - diff)/12);
-        // background( goldenRed, goldenGreen, goldenBlue);
-        println("Orangish");
+        switch (scene) {
+          case 1:
+            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            break;
+          case 2:
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
+            break;
+        }
+        //println("Orangish");
         test = 2;
     }
     
@@ -84,8 +97,15 @@ class Sun{
     else if (voltage >= 11 && voltage < 14) {
         //println("Voltage3: " + sun.getInt(counter, 1));
         fill(cloudyRed* (12 - diff)/12, cloudyGreen* (12 - diff)/12, cloudyBlue* (12 - diff)/12);
-        // background(cloudyRed, cloudyGreen, cloudyBlue);
-        println("Grayish");
+        switch (scene) {
+          case 1:
+            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            break;
+          case 2:
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
+            break;
+        }
+        //println("Grayish");
         test = 3;
     }
         
@@ -93,8 +113,15 @@ class Sun{
     else if (voltage >= 14 && voltage < 18) {
         //println("Voltage4: " + sun.getInt(counter, 1));
         fill(earlyRed* (12 - diff)/12, earlyGreen* (12 - diff)/12, earlyBlue* (12 - diff)/12);
-        // background(earlyRed, earlyGreen, earlyBlue);
-        println("Slight blue");
+        switch (scene) {
+          case 1:
+            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            break;
+          case 2:
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
+            break;
+        }
+        //println("Slight blue");
         test = 4;
         
     } 
@@ -103,8 +130,15 @@ class Sun{
     else if (voltage >= 18 && voltage < 20) {
         //println("Voltage4: " + sun.getInt(counter, 1));
         fill(basicRed* (12 - diff)/12, basicGreen* (12 - diff)/12, basicBlue* (12 - diff)/12);
-        // background(earlyRed, earlyGreen, earlyBlue);
-        println("Bright blue");
+        switch (scene) {
+          case 1:
+            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            break;
+          case 2:
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
+            break;
+        }
+        //println("Bright blue");
         test = 4;
         
     } 
@@ -113,8 +147,15 @@ class Sun{
     else if (voltage >= 20 && voltage <= 25) {
         //println("Voltage4: " + sun.getInt(counter, 1));
         fill(noonRed* (12 - diff)/12, noonGreen* (12 - diff)/12, noonBlue* (12 - diff)/12);
-        // background(earlyRed, earlyGreen, earlyBlue);
-        println("Brightest blue");
+        switch (scene) {
+          case 1:
+            quad(640, 0, 640, 440, 900, 440, 900, 0);
+            break;
+          case 2:
+            quad(330, 0, 330, 500, 900, 500, 900, 0);
+            break;
+        }
+        //println("Brightest blue");
         test = 4;
         
     } 
