@@ -53,8 +53,8 @@ String screen;
 
 void setup() {
 
-  PImage[] forwardImg = {loadImage("data/forward.png"), loadImage("data/forward_hover.png"), loadImage("")};
-  PImage[] backImg = {loadImage("data/back.png"), loadImage("data/back_hover.png"), loadImage("")};
+  PImage[] forwardImg = {loadImage("data/hour_forward.png"), loadImage("data/hour_forward_hover.png"), loadImage("")};
+  PImage[] backImg = {loadImage("data/hour_backward.png"), loadImage("data/hour_backward_hover.png"), loadImage("")};
   // Data from 01/1/2021 to 01/01/2022
   xy = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T01%3A00%3A54&rToDate=2022-01-01T01%3A00%3A35.151&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+In", "csv");
   xz = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T01%3A00%3A54&rToDate=2022-01-01T01%3A00%3A35.151&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+Out", "csv");
