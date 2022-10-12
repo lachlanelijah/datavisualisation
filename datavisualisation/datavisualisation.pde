@@ -1,4 +1,4 @@
-import beads.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import beads.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import java.util.*;
 
@@ -170,7 +170,7 @@ void draw() {
   //String fullDate =  "2021-10-14 09:50:00";
 
   //System.out.println(fullDate.substring(11,16));
-
+  updateTimeline();
   if (millis()-timer > 1000) {
     updateTimeline();
     //every 1 second, format the time and the date, update the timeline, reset the timer
