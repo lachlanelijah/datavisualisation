@@ -31,10 +31,12 @@ float parsedMinute;
 PFont montserrat;
 
 Table xy;
+Table yz;
 
 int fromRow;
 
 float peopleComingIn=0;
+float sunVolt;
 //Boolean gotPeople = false;
 
 //float xPos = 899;
@@ -54,6 +56,7 @@ void setup() {
   PImage[] backImg = {loadImage("data/back.png"), loadImage("data/back_hover.png"), loadImage("")};
   // Data from 01/1/2021 to 01/01/2022
   xy = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T01%3A00%3A54&rToDate=2022-01-01T01%3A00%3A35.151&rFamily=people_sh&rSensor=CB11.PC02.16.JonesStEast&rSubSensor=CB11.02.JonesSt+In", "csv");
+  yz = loadTable("https://eif-research.feit.uts.edu.au/api/csv/?rFromDate=2021-01-01T00%3A00&rToDate=2022-01-01T00%3A00&rFamily=weather&rSensor=SV", "csv");
 
   montserrat = createFont("Montserrat-Medium.ttf", 75);
 
@@ -251,36 +254,6 @@ void drawPeople(Boolean fiveSec) {
     }
   }
 }
-
-
-
-
-  //float count = 0;
-  //while(count != 1){
-  // if(time.contains("02")){
-  //  float peopleCount = 2;
-  //  if(all.size() != peopleCount){
-  //  for(int i = 0; i < peopleCount; i++){
-  //    all.add(new People(i*200));  
-  //  }
-  //  }
-  // }
-  // count++;
-  //}
-
-  // float count1 = 0;
-  //while(count1 != 1){
-  // if(time.contains("09")){
-  //  float peopleCount = 2;
-  //  if(all.size() != 4){
-  //  for(int i = 0; i < peopleCount; i++){
-  //    all.add(new People(i*200));  
-  //  }
-  //  }
-  // }
-  // count1++;
-  //}
-
 
   void formatTime() {
     int minuteCheck = Integer.parseInt(paddedMinute);
@@ -482,7 +455,7 @@ void formatDate() {
     float pixel;
     pixel = minute * 0.5333333333;
     pixel += hour * 60*0.5333333333;
-    System.out.println("timeline location: " + pixel);
+    //System.out.println("timeline location: " + pixel);
 
     fill(7, 151, 216);
     rect(66, 660, 66+pixel, 680);
@@ -516,7 +489,25 @@ void drawScreen1Scenery() {
 
   fill(226, 227, 206); //building 10 front
   quad(485, 0, 485, 470, 640, 452, 640, 0);
-
+  
+  Sun sun = new Sun();
+  Boolean sunnyD = false;
+  //
+  //println("drawwwwwwwwwwwww");
+  for (int i = 0; i < yz.getRowCount(); i++) {
+    String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
+    if (yz.getString(i, 0).contains(dateAPI + " " + time)) {
+      sunVolt=yz.getFloat(i, 1);
+      sunnyD = true;
+      println(sunVolt);
+    }
+  }
+  if (sunnyD) {
+    sun.drawSun(sunVolt, 1);
+    sunnyD = false;
+  } else if (!sunnyD) {
+    sun.drawSun(sunVolt, 1);
+  }
     
 }
   
