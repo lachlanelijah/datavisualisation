@@ -76,37 +76,58 @@ void setup() {
     .setPosition(10, 660)
     .setSize(46, 20)
     .setValue(0)
-    .setImages(backImg)
+    .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
+    .setLabel("←")
+    //.setImages(backImg)
   ;
   gui.addButton("forward")
     .setPosition(844, 660)
     .setSize(46, 20)
     .setValue(0)
-    .setImages(forwardImg)
-    ;
+    .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
+    .setLabel("→")
+    //.setImages(forwardImg)
+  ;
+  
   gui.addButton("monthForward")
-    .setLabel("month ->")
+    .setLabel("Month →")
     .setValue(0)
     .setPosition(830, 170)
     .setSize(40, 30)
+    .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
   ;
   gui.addButton("monthBack")
-    .setLabel("<- month")
+    .setLabel("← Month")
     .setValue(0)
     .setPosition(680, 170)
     .setSize(40, 30)
+    .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
   ;
   gui.addButton("dayForward")
-    .setLabel("day ->")
+    .setLabel("Day →")
     .setValue(0)
     .setPosition(780, 170)
     .setSize(40, 30)
+    .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
   ;
   gui.addButton("dayBack")
-    .setLabel("<- day")
+    .setLabel("← Day")
     .setValue(0)
     .setPosition(730, 170)
     .setSize(40, 30)
+    .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
   ;
     
   gui.addButton("screen1")
@@ -114,13 +135,73 @@ void setup() {
    .setValue(0)
    .setPosition(0, 0)
    .setSize(100, 40)
+   .setColorBackground(color(62,195,255))
+   .setColorActive(color(0,0,0))
+   .setColorForeground(color(7,151,255))
  ;
  gui.addButton("screen2")
    .setLabel("Screen 2")
    .setValue(0)
    .setPosition(100, 0)
    .setSize(100, 40)
+   .setColorBackground(color(62,195,255))
+    .setColorActive(color(0,0,0))
+    .setColorForeground(color(7,151,255))
  ;
+ 
+ gui.getController("screen1")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .toUpperCase(false)
+   .setSize(15)
+ ;
+ 
+ gui.getController("screen2")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .toUpperCase(false)
+   .setSize(15)
+ ;
+ 
+ gui.getController("back")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .setSize(15)
+ ;
+ 
+ gui.getController("forward")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .setSize(15)
+ ;
+ 
+ gui.getController("monthForward")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .toUpperCase(false)
+   .setSize(9)
+  ;
+  
+  gui.getController("monthBack")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .toUpperCase(false)
+   .setSize(9)
+  ;
+  
+  gui.getController("dayForward")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .toUpperCase(false)
+   .setSize(9)
+  ;
+  
+  gui.getController("dayBack")
+   .getCaptionLabel()
+   .setFont(montserrat)
+   .toUpperCase(false)
+   .setSize(9)
+  ;
 
   hour = 0;
   minute = 0;
@@ -517,6 +598,8 @@ void drawScreen1Scenery() {
   fill(226, 227, 206); //building 10 front
   quad(485, 0, 485, 470, 640, 452, 640, 0);
   
+  
+  
   Sun sun = new Sun();
   Boolean sunnyD = false;
   for (int i = 0; i < yz.getRowCount(); i++) {
@@ -533,6 +616,9 @@ void drawScreen1Scenery() {
   } else if (!sunnyD) {
     sun.drawSun(sunVolt, 1);
   }
+  
+  fill(255);
+  rect(660, 30, 880, 160);
     
 }
   
@@ -585,7 +671,7 @@ void drawScreen2Scenery(){
   quad(455,143, 485,150, 485, 500, 455, 505);
   rectMode(CORNERS);
   fill(255);
-  rect(660, 30, 880, 210);
+  rect(660, 30, 880, 160);
   
 }
 
