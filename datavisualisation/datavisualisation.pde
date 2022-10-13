@@ -37,6 +37,7 @@ Table yz;
 int fromRow;
 
 float peopleComingIn=0;
+int peopleCount = 0;
 float sunVolt;
 //Boolean gotPeople = false;
 
@@ -86,6 +87,13 @@ void setup() {
   frameRate(60);
   timer = millis();
   datatimer = millis();
+    gui.addTextlabel("people")
+    .setText("People count: " + peopleCount + "")
+    .setPosition(0, 95)
+    .setColorValue(0xffffff00)
+    .setFont(createFont("montserrat",40))
+    .setValue(3);
+
 
   gui.addButton("back")
     .setPosition(10, 660)
@@ -244,8 +252,10 @@ void draw() {
   background(178, 224, 245);
 
   if (screen == "1") {
+     gui.getController("people").setValueLabel("People coming in: " + peopleCount + "");
     drawScreen1Scenery();
   } else {
+     gui.getController("people").setValueLabel("People going out: " + peopleCount + "");
     drawScreen2Scenery();
   }
 
@@ -274,11 +284,12 @@ void draw() {
     //println("keep it running...");
   }
   if (millis()-datatimer > 5000) {
+      peopleCount =0; 
     drawPeople(true);
     datatimer = millis();
     println("checking count...");
   }
-
+ 
 
   //String fullDate =  "2021-10-14 09:50:00";
 
@@ -339,6 +350,7 @@ void drawPeople(Boolean fiveSec) {
         //println(xy.getString(i, 0));
         //println(xy.getInt(i, 1));
         peopleComingIn=xy.getInt(i, 1);
+        peopleCount =xy.getInt(i, 1); 
         gotPeople = true;
       }
       break;
@@ -348,6 +360,7 @@ void drawPeople(Boolean fiveSec) {
         //println(xy.getString(i, 0));
         //println(xy.getInt(i, 1));
         peopleComingIn=xz.getInt(i, 1);
+          peopleCount =xy.getInt(i, 1); 
         gotPeople = true;
       }
       break;
@@ -384,6 +397,7 @@ void drawPeople(Boolean fiveSec) {
       peoples.clear();
     }
   }
+  //peopleCount1 = peoples.size();
 }
 
 void formatTime() {
