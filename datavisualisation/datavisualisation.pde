@@ -50,6 +50,21 @@ float sunVolt;
 LinkedList<People> peoples = new LinkedList<People>();
 
 String screen;
+// Audio
+AudioContext ac;
+
+Glide gain;
+Glide gainMorning;
+Glide gainAfternoon;
+Glide gainNight;
+
+
+Envelope envRate1;
+Envelope envRate2;
+Envelope envRate3;
+SamplePlayer sp1;
+SamplePlayer sp2;
+SamplePlayer sp3;
 
 void setup() {
 
@@ -77,7 +92,7 @@ void setup() {
     .setSize(46, 20)
     .setValue(0)
     .setImages(backImg)
-  ;
+    ;
   gui.addButton("forward")
     .setPosition(844, 660)
     .setSize(46, 20)
@@ -89,38 +104,38 @@ void setup() {
     .setValue(0)
     .setPosition(830, 170)
     .setSize(40, 30)
-  ;
+    ;
   gui.addButton("monthBack")
     .setLabel("<- month")
     .setValue(0)
     .setPosition(680, 170)
     .setSize(40, 30)
-  ;
+    ;
   gui.addButton("dayForward")
     .setLabel("day ->")
     .setValue(0)
     .setPosition(780, 170)
     .setSize(40, 30)
-  ;
+    ;
   gui.addButton("dayBack")
     .setLabel("<- day")
     .setValue(0)
     .setPosition(730, 170)
     .setSize(40, 30)
-  ;
-    
+    ;
+
   gui.addButton("screen1")
-   .setLabel("Screen 1")
-   .setValue(0)
-   .setPosition(0, 0)
-   .setSize(100, 40)
- ;
- gui.addButton("screen2")
-   .setLabel("Screen 2")
-   .setValue(0)
-   .setPosition(100, 0)
-   .setSize(100, 40)
- ;
+    .setLabel("Screen 1")
+    .setValue(0)
+    .setPosition(0, 0)
+    .setSize(100, 40)
+    ;
+  gui.addButton("screen2")
+    .setLabel("Screen 2")
+    .setValue(0)
+    .setPosition(100, 0)
+    .setSize(100, 40)
+    ;
 
   hour = 0;
   minute = 0;
@@ -128,21 +143,112 @@ void setup() {
   day = 1;
   month = 1;
   year = 2021;
-  
+
   screen = "1";
+
+  ac = new AudioContext();
+  gain = new Glide(ac, 1);
+  gainMorning= new Glide(ac, 1);
+  gainAfternoon = new Glide(ac, 1);
+  gainNight= new Glide(ac, 1);
+  sound();
+}
+
+void sound() {
+  // Put three different audios in 3 sample players
+  File morning = dataFile("morning.wav");
+  String file1 =   morning.getAbsolutePath();
+  File afternoon = dataFile("afternoon.wav");
+  String file2 =   afternoon.getAbsolutePath();
+  File night = dataFile("night.wav");
+  String file3 =   night.getAbsolutePath();
+
+  sp1 = new SamplePlayer(ac, SampleManager.sample(file1));
+  sp2 = new SamplePlayer(ac, SampleManager.sample(file2));
+  sp3 = new SamplePlayer(ac, SampleManager.sample(file3));
+
+
+
+  // Create envelopes and set rates to default 1
+  envRate1 = new Envelope(ac, 1);
+  sp1.setRate(envRate1);
+  envRate2 = new Envelope(ac, 1);
+  sp2.setRate(envRate2);
+  envRate3 = new Envelope(ac, 1);
+  sp3.setRate(envRate3);
+
+  // Loop over the audios start from the beginning to end
+  sp1.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+  sp2.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+  sp3.setLoopType(SamplePlayer.LoopType.LOOP_FORWARDS);
+
+
+
+
+  // Create panners
+  Panner p1 = new Panner(ac, 0);
+  Panner p2 = new Panner(ac, 0);
+  Panner p3 = new Panner(ac, 0);
+
+
+
+
+  // Greate gains
+  Gain g1 = new Gain(ac, 2, gainMorning);
+  Gain g2 = new Gain(ac, 2, gainAfternoon);
+  Gain g3 = new Gain(ac, 2, gainNight);
+
+
+  // Add sample players to the panners
+  p1.addInput(sp1);
+  p2.addInput(sp2);
+  p3.addInput(sp3);
+
+
+
+
+  // Add the panners to the gain
+  g1.addInput(p1);
+  g2.addInput(p2);
+  g3.addInput(p3);
+
+
+  // Create a master gain and add all the gains
+  Gain masterGain = new Gain(ac, 2, gain);
+
+  masterGain.addInput(g1);
+  masterGain.addInput(g2);
+  masterGain.addInput(g3);
+
+
+
+  // Add the mastergain to the output
+  ac.out.addInput(masterGain);
+  ac.start();
 }
 
 void draw() {
+  if (hour >= 6 && hour <= 10) {
+    gainMorning.setValue(1);
+    gainAfternoon.setValue(0);
+    gainNight.setValue(0);
+  } else if (hour >= 11 && hour <= 18) {
+    gainMorning.setValue(0);
+    gainAfternoon.setValue(1);
+    gainNight.setValue(0);
+  } else {
+    gainMorning.setValue(0);
+    gainAfternoon.setValue(0);
+    gainNight.setValue(1);
+  }
   background(178, 224, 245);
 
   if (screen == "1") {
-  drawScreen1Scenery();
-  
+    drawScreen1Scenery();
   } else {
-   drawScreen2Scenery(); 
-   
+    drawScreen2Scenery();
   }
-  
+
   fill(62, 195, 255); //timeline light blue
   rect(66, 660, 834, 680);
   drawScaleNumbers();
@@ -158,10 +264,10 @@ void draw() {
 
   date = paddedDay + "-" + paddedMonth + "-" + year;
   text(date, 770, 150);
-  
+
   if (millis()-datatimer < 5000) {
     //if (millis()-datatimer > 1000) {
-      drawPeople(false);
+    drawPeople(false);
     //}
     //drawPeople(false);
     //datatimer = millis();
@@ -227,27 +333,27 @@ void drawPeople(Boolean fiveSec) {
   for (int i = 0; i < xy.getRowCount(); i++) {
     String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
     switch (screen) {
-      case "1":
-        if (xy.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
-          println("got people.");
-          //println(xy.getString(i, 0));
-          //println(xy.getInt(i, 1));
-          peopleComingIn=xy.getInt(i, 1);
-          gotPeople = true;
-        }
-        break;
-      case "2":
-        if (xz.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
-          println("got people.");
-          //println(xy.getString(i, 0));
-          //println(xy.getInt(i, 1));
-          peopleComingIn=xz.getInt(i, 1);
-          gotPeople = true;
-        }
-        break;
+    case "1":
+      if (xy.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
+        println("got people.");
+        //println(xy.getString(i, 0));
+        //println(xy.getInt(i, 1));
+        peopleComingIn=xy.getInt(i, 1);
+        gotPeople = true;
+      }
+      break;
+    case "2":
+      if (xz.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
+        println("got people.");
+        //println(xy.getString(i, 0));
+        //println(xy.getInt(i, 1));
+        peopleComingIn=xz.getInt(i, 1);
+        gotPeople = true;
+      }
+      break;
     }
   }
-  
+
   if (!fiveSec) {
     if (gotPeople) {
       if (peoples.size() != peopleComingIn) {
@@ -257,17 +363,17 @@ void drawPeople(Boolean fiveSec) {
       }
       gotPeople = false;
     }
-      
+
     for (People people : peoples) {
       switch (screen) {
-        case "1":
-          people.drawCircle(1);
-          people.decreaseSpeed1(peopleComingIn);
-          break;
-        case "2":
-          people.drawCircle(2);
-          people.decreaseSpeed2(peopleComingIn);
-          break;
+      case "1":
+        people.drawCircle(1);
+        people.decreaseSpeed1(peopleComingIn);
+        break;
+      case "2":
+        people.drawCircle(2);
+        people.decreaseSpeed2(peopleComingIn);
+        break;
       }
     }
   } else if (fiveSec) {
@@ -280,38 +386,38 @@ void drawPeople(Boolean fiveSec) {
   }
 }
 
-  void formatTime() {
-    int minuteCheck = Integer.parseInt(paddedMinute);
-    int hourCheck = Integer.parseInt(paddedHour);
-    System.out.println("min: " + minute);
-    System.out.println("hour: " + hour);
-    System.out.println("minuteCheck: " + minuteCheck);
-    System.out.println("hourCheck: " + hourCheck);
+void formatTime() {
+  int minuteCheck = Integer.parseInt(paddedMinute);
+  int hourCheck = Integer.parseInt(paddedHour);
+  System.out.println("min: " + minute);
+  System.out.println("hour: " + hour);
+  System.out.println("minuteCheck: " + minuteCheck);
+  System.out.println("hourCheck: " + hourCheck);
 
-    if (minuteCheck <= 9 && hourCheck <= 9) {
-      paddedMinute = String.format("%02d", minute);
-      paddedHour = String.format("%02d", hour);
-      time = paddedHour + ":" + paddedHour;
-    } else if (minuteCheck <= 9 && hourCheck > 9) {
-      paddedMinute = String.format("%02d", minute);
-      paddedHour = Integer.toString(hour);
-      time = paddedHour + ":" + paddedMinute;
-    } else if (minuteCheck > 9 && hourCheck <= 9) {
-      paddedMinute = Integer.toString(minute);
-      paddedHour = String.format("%02d", hour);
-      time = paddedHour + ":" + minute;
-    } else {
-      //if (minute == 0) {
-      //  paddedMinute = "00";
-      //}
-      //if (hour == 0) {
-      //  paddedHour = "00";
-      //}
+  if (minuteCheck <= 9 && hourCheck <= 9) {
+    paddedMinute = String.format("%02d", minute);
+    paddedHour = String.format("%02d", hour);
+    time = paddedHour + ":" + paddedHour;
+  } else if (minuteCheck <= 9 && hourCheck > 9) {
+    paddedMinute = String.format("%02d", minute);
+    paddedHour = Integer.toString(hour);
+    time = paddedHour + ":" + paddedMinute;
+  } else if (minuteCheck > 9 && hourCheck <= 9) {
+    paddedMinute = Integer.toString(minute);
+    paddedHour = String.format("%02d", hour);
+    time = paddedHour + ":" + minute;
+  } else {
+    //if (minute == 0) {
+    //  paddedMinute = "00";
+    //}
+    //if (hour == 0) {
+    //  paddedHour = "00";
+    //}
 
-      paddedMinute = Integer.toString(minute);
-      paddedHour = Integer.toString(hour);
-    }
+    paddedMinute = Integer.toString(minute);
+    paddedHour = Integer.toString(hour);
   }
+}
 
 void formatDate() {
   int dayCheck = Integer.parseInt(paddedDay);
@@ -334,162 +440,161 @@ void formatDate() {
     paddedDay = Integer.toString(day);
     date = paddedDay + "/" + paddedMonth + "/" + year;
   }
-    //System.out.println("padDay: " + paddedDay);
-    //System.out.println("padMonth: " + paddedMonth);
+  //System.out.println("padDay: " + paddedDay);
+  //System.out.println("padMonth: " + paddedMonth);
 }
 
 
-  void forward() {
-    if (hour >= 0 && hour < 24) {
-      hour += 1;
-      minute = -1;
-    }
-
-    if (hour == 24) {
-      hour = 0;
-      minute = -1;
-    }
-    datatimer = millis() + 600;
-    drawPeople(true);
+void forward() {
+  if (hour >= 0 && hour < 24) {
+    hour += 1;
+    minute = -1;
   }
 
-  void back() {
-    if (hour == 0) {
-      hour = 24;
-      minute = -1;
-    }
-    if (hour > 0) {
-      hour -= 1;
-      minute = -1;
-    }
-    datatimer = millis() + 600;
-    drawPeople(true);
+  if (hour == 24) {
+    hour = 0;
+    minute = -1;
+  }
+  datatimer = millis() + 600;
+  drawPeople(true);
+}
+
+void back() {
+  if (hour == 0) {
+    hour = 24;
+    minute = -1;
+  }
+  if (hour > 0) {
+    hour -= 1;
+    minute = -1;
+  }
+  datatimer = millis() + 600;
+  drawPeople(true);
+}
+
+void monthForward() {
+  if (month >= 1 && month < 12) {
+    month += 1;
+    day = 1;
   }
 
-  void monthForward() {
-    if (month >= 1 && month < 12) {
-      month += 1;
-      day = 1;
-    }
+  if (month == 12) {
+    month = 1;
+    day = 1;
+  }
+  datatimer = millis() + 600;
+}
 
-    if (month == 12) {
-      month = 1;
-      day = 1;
-    }
-    datatimer = millis() + 600;
+void monthBack() {
+  if (month > 1 && month <= 12) {
+    month -= 1;
+    day = 1;
   }
 
-  void monthBack() {
-    if (month > 1 && month <= 12) {
-      month -= 1;
-      day = 1;
-    }
-
-    if (month == 1) {
-      month = 12;
-      day = 1;
-    }
-    datatimer = millis() + 600;
+  if (month == 1) {
+    month = 12;
+    day = 1;
   }
-  //january, march, may, july, aug, oct, dec 31
-  //feb 28
-  // april, june, september, november 30
-  void dayForward() {
+  datatimer = millis() + 600;
+}
+//january, march, may, july, aug, oct, dec 31
+//feb 28
+// april, june, september, november 30
+void dayForward() {
 
-    //Boolean monthCheck = false;
+  //Boolean monthCheck = false;
 
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) {
-      if (day < 31) {
-        day+= 1;
-      } else {
-        day = 1;
-        month += 1;
-        //monthCheck = true;
-      }
-    } else if (month == 2) {
-      if (day < 28) {
-        day += 1;
-      } else {
-        day = 1;
-        month += 1;
-        //monthCheck = true;
-      }
-    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-      if (day < 30) {
-        day += 1;
-      } else {
-        day = 1;
-        month += 1;
-        //monthCheck = true;
-      }
-    } else if (month == 12) {
-     day = 1;
-     month = 1;
-    }
-
-    //if (monthCheck == true && month > 12) {
-    //  month = 1;
-    //}
-    datatimer = millis() + 600;
-  }
-
-  void dayBack() {
-    if (month == 1 && day == 1) {
-      month = 12;
-      day = 31;
-    } else if (month == 2 && day == 1) {
-      month = 1;
-      day = 31;
-    } else if (month == 3 && day == 1) {
-      month = 2;
-      day = 28;
-    } else if (month == 4 && day == 1) {
-      month = 3;
-      day = 31;
-    } else if (month == 5 && day == 1) {
-      month = 4;
-      day = 30;
-    } else if (month == 6 && day == 1) {
-      month = 5;
-      day = 31;
-    } else if (month == 7 && day == 1) {
-      month = 6;
-      day = 30;
-    } else if (month == 8 && day == 1) {
-      month = 7;
-      day = 31;
-    } else if (month == 9 && day == 1) {
-      month = 8;
-      day = 31;
-    } else if (month == 10 && day == 1) {
-      month = 9;
-      day = 30;
-    } else if (month == 11 && day == 1) {
-      month = 10;
-      day = 31;
-    } else if (month == 12 && day == 1) {
-      month = 11;
-      day = 30;
-    } else if (day == 1){
-      
+  if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10) {
+    if (day < 31) {
+      day+= 1;
     } else {
-     day -= 1; 
+      day = 1;
+      month += 1;
+      //monthCheck = true;
     }
-    datatimer = millis() + 600;
+  } else if (month == 2) {
+    if (day < 28) {
+      day += 1;
+    } else {
+      day = 1;
+      month += 1;
+      //monthCheck = true;
+    }
+  } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+    if (day < 30) {
+      day += 1;
+    } else {
+      day = 1;
+      month += 1;
+      //monthCheck = true;
+    }
+  } else if (month == 12) {
+    day = 1;
+    month = 1;
   }
 
-  void updateTimeline() {
-    float pixel;
-    pixel = minute * 0.5333333333;
-    pixel += hour * 60*0.5333333333;
-    //System.out.println("timeline location: " + pixel);
+  //if (monthCheck == true && month > 12) {
+  //  month = 1;
+  //}
+  datatimer = millis() + 600;
+}
 
-    fill(7, 151, 216);
-    rect(66, 660, 66+pixel, 680);
+void dayBack() {
+  if (month == 1 && day == 1) {
+    month = 12;
+    day = 31;
+  } else if (month == 2 && day == 1) {
+    month = 1;
+    day = 31;
+  } else if (month == 3 && day == 1) {
+    month = 2;
+    day = 28;
+  } else if (month == 4 && day == 1) {
+    month = 3;
+    day = 31;
+  } else if (month == 5 && day == 1) {
+    month = 4;
+    day = 30;
+  } else if (month == 6 && day == 1) {
+    month = 5;
+    day = 31;
+  } else if (month == 7 && day == 1) {
+    month = 6;
+    day = 30;
+  } else if (month == 8 && day == 1) {
+    month = 7;
+    day = 31;
+  } else if (month == 9 && day == 1) {
+    month = 8;
+    day = 31;
+  } else if (month == 10 && day == 1) {
+    month = 9;
+    day = 30;
+  } else if (month == 11 && day == 1) {
+    month = 10;
+    day = 31;
+  } else if (month == 12 && day == 1) {
+    month = 11;
+    day = 30;
+  } else if (day == 1) {
+  } else {
+    day -= 1;
   }
+  datatimer = millis() + 600;
+}
+
+void updateTimeline() {
+  float pixel;
+  pixel = minute * 0.5333333333;
+  pixel += hour * 60*0.5333333333;
+  //System.out.println("timeline location: " + pixel);
+
+  fill(7, 151, 216);
+  rect(66, 660, 66+pixel, 680);
+}
 
 void drawScreen1Scenery() {
-  
+
   fill (59, 59, 59); //ground
   quad(0, 440, width, 440, width, height, 0, height);
 
@@ -516,7 +621,7 @@ void drawScreen1Scenery() {
 
   fill(226, 227, 206); //building 10 front
   quad(485, 0, 485, 470, 640, 452, 640, 0);
-  
+
   Sun sun = new Sun();
   Boolean sunnyD = false;
   for (int i = 0; i < yz.getRowCount(); i++) {
@@ -533,10 +638,9 @@ void drawScreen1Scenery() {
   } else if (!sunnyD) {
     sun.drawSun(sunVolt, 1);
   }
-    
 }
-  
-void drawScreen2Scenery(){
+
+void drawScreen2Scenery() {
   Sun sun = new Sun();
   Boolean sunnyD = false;
   for (int i = 0; i < yz.getRowCount(); i++) {
@@ -553,67 +657,68 @@ void drawScreen2Scenery(){
   } else if (!sunnyD) {
     sun.drawSun(sunVolt, 2);
   }
-  
-  fill(222,222,222); //top lighter grey concrete
-  quad(300,0, 400, 0, 560, 100, 560, 300);
-  
-  fill(200,200,200);//top darker grey concrete
-  quad(0,0, 300, 0, 600, 165, 0, height);
-  
-  fill(80,45,45); //maroon bar top
+
+  fill(222, 222, 222); //top lighter grey concrete
+  quad(300, 0, 400, 0, 560, 100, 560, 300);
+
+  fill(200, 200, 200);//top darker grey concrete
+  quad(0, 0, 300, 0, 600, 165, 0, height);
+
+  fill(80, 45, 45); //maroon bar top
   quad(560, 100, width, 85, width, 130, 560, 144);
-  
-  fill(57,32,32); //maroon bar bottom
-  quad(560,144, width, 130, width, 145, 590, 160);
-  
-  fill(173,173,173); //floor
+
+  fill(57, 32, 32); //maroon bar bottom
+  quad(560, 144, width, 130, width, 145, 590, 160);
+
+  fill(173, 173, 173); //floor
   quad(0, 350, width, 350, width, height, 0, height);
-  
-  fill (75,63,63); //mat in front of door
-  quad(375,480, width, 490, width, 540, 200, 530);
+
+  fill (75, 63, 63); //mat in front of door
+  quad(375, 480, width, 490, width, 540, 200, 530);
 
   fill(155, 86, 52); //brown left side wall
-  quad(0,0, 375,150, 375,500, 0,600);
-  
+  quad(0, 0, 375, 150, 375, 500, 0, 600);
+
   fill(134, 222, 255); //glass
-  quad(375,165, width,145, width, 490, 375, 480);
-  
+  quad(375, 165, width, 145, width, 490, 375, 480);
+
   fill(130, 130, 130); //pillar left 
-  quad(415,150, 455,143, 455,505, 415, 500);
-  
+  quad(415, 150, 455, 143, 455, 505, 415, 500);
+
   fill(143, 143, 143); //pillar right
-  quad(455,143, 485,150, 485, 500, 455, 505);
+  quad(455, 143, 485, 150, 485, 500, 455, 505);
   rectMode(CORNERS);
   fill(255);
   rect(660, 30, 880, 210);
-  
 }
 
 void drawScaleNumbers() {
-    textSize(15);
-    if (screen == "1") {
+  textSize(15);
+  if (screen == "1") {
     fill(255, 255, 255);
-    } else {
-     fill(0); 
-    }
-    text(0, 66, 695);
-    text(3, 162, 695);
-    text(6, 258, 695);
-    text(9, 354, 695);
-    text(12, 450, 695);
-    text(15, 546, 695);
-    text(18, 642, 695);
-    text(21, 738, 695);
-    text(24, 834, 695);
+  } else {
+    fill(0);
   }
-  
-void screen1(){
+  text(0, 66, 695);
+  text(3, 162, 695);
+  text(6, 258, 695);
+  text(9, 354, 695);
+  text(12, 450, 695);
+  text(15, 546, 695);
+  text(18, 642, 695);
+  text(21, 738, 695);
+  text(24, 834, 695);
+}
+
+
+
+void screen1() {
   screen = "1";
   drawPeople(true);
   datatimer = millis();
 }
 
-void screen2(){
+void screen2() {
   screen = "2";
   drawPeople(true);
   datatimer = millis();
