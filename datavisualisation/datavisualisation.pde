@@ -1,4 +1,4 @@
-import beads.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import beads.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import java.util.*;
 
@@ -90,8 +90,8 @@ void setup() {
     .setPosition(0, 95)
     .setColorValue(0xffffff00)
     .setFont(createFont("montserrat",40))
-    .setValue(3);
-
+    .setValue(3)
+  ;
 
   gui.addButton("back")
     .setPosition(10, 660)
@@ -101,8 +101,8 @@ void setup() {
     .setColorActive(color(0,0,0))
     .setColorForeground(color(7,151,255))
     .setLabel("←")
-    //.setImages(backImg)
   ;
+  
   gui.addButton("forward")
     .setPosition(844, 660)
     .setSize(46, 20)
@@ -111,7 +111,6 @@ void setup() {
     .setColorActive(color(0,0,0))
     .setColorForeground(color(7,151,255))
     .setLabel("→")
-    //.setImages(forwardImg)
   ;
   
   gui.addButton("monthForward")
@@ -123,6 +122,7 @@ void setup() {
     .setColorActive(color(0,0,0))
     .setColorForeground(color(7,151,255))
   ;
+  
   gui.addButton("monthBack")
     .setLabel("← Month")
     .setValue(0)
@@ -132,6 +132,7 @@ void setup() {
     .setColorActive(color(0,0,0))
     .setColorForeground(color(7,151,255))
   ;
+  
   gui.addButton("dayForward")
     .setLabel("Day →")
     .setValue(0)
@@ -141,6 +142,7 @@ void setup() {
     .setColorActive(color(0,0,0))
     .setColorForeground(color(7,151,255))
   ;
+  
   gui.addButton("dayBack")
     .setLabel("← Day")
     .setValue(0)
@@ -160,6 +162,7 @@ void setup() {
    .setColorActive(color(0,0,0))
    .setColorForeground(color(7,151,255))
  ;
+ 
  gui.addButton("screen2")
    .setLabel("Screen 2")
    .setValue(0)
@@ -566,13 +569,13 @@ void back() {
   drawPeople(true);
 }
 
-void monthForward() {
-  if (month >= 1 && month < 12) {
-    month += 1;
-    day = 1;
-  }
+//void monthForward() {
+//  if (month >= 1 && month < 12) {
+//    month += 1;
+//    day = 1;
+//  }
 
-  void monthForward() {
+void monthForward() {
     if (month >= 1 && month < 12) {
       month += 1;
       day = 1;
@@ -581,18 +584,18 @@ void monthForward() {
       day = 1;
     }
     datatimer = millis() + 600;
-  }
+}
 
-  void monthBack() {
-    if (month > 1 && month <= 12) {
+void monthBack() {
+  if (month > 1 && month <= 12) {
       month -= 1;
       day = 1;
-    } else if (month == 1) {
+  } else if (month == 1) {
       month = 12;
       day = 1;
-    }
-    datatimer = millis() + 600;
   }
+    datatimer = millis() + 600;
+  
   datatimer = millis() + 600;
 }
 //january, march, may, july, aug, oct, dec 31
@@ -692,7 +695,6 @@ void updateTimeline() {
 }
 
 void drawScreen1Scenery() {
-
   fill (59, 59, 59); //ground
   quad(0, 440, width, 440, width, height, 0, height);
 
@@ -720,8 +722,6 @@ void drawScreen1Scenery() {
   fill(226, 227, 206); //building 10 front
   quad(485, 0, 485, 470, 640, 452, 640, 0);
   
-  
-  
   Sun sun = new Sun();
   Boolean sunnyD = false;
   for (int i = 0; i < yz.getRowCount(); i++) {
@@ -741,7 +741,6 @@ void drawScreen1Scenery() {
   
   fill(255);
   rect(660, 30, 880, 160);
-    
 }
 
 void drawScreen2Scenery() {
@@ -755,6 +754,7 @@ void drawScreen2Scenery() {
       println(sunVolt);
     }
   }
+  
   if (sunnyD) {
     sun.drawSun(sunVolt, 2);
     sunnyD = false;
@@ -794,7 +794,6 @@ void drawScreen2Scenery() {
   rectMode(CORNERS);
   fill(255);
   rect(660, 30, 880, 160);
-  
 }
 
 void drawScaleNumbers() {
@@ -814,8 +813,6 @@ void drawScaleNumbers() {
   text(21, 738, 695);
   text(24, 834, 695);
 }
-
-
 
 void screen1() {
   screen = "1";
