@@ -86,7 +86,7 @@ void setup() {
   datatimer = millis();
     gui.addTextlabel("people")
     .setText("People count: " + peopleCount + "")
-    .setPosition(0, 95)
+    .setPosition(5, 600)
     .setColorValue(0xffffff00)
     .setFont(createFont("montserrat",40))
     .setValue(3)
