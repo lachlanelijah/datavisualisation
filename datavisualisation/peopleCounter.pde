@@ -11,7 +11,7 @@ import java.util.*;
 
 
 
-int peopleCount = 0;
+//int peopleCount = 0;
 
 
 
@@ -175,7 +175,7 @@ float getNumberOfPeopleInAHour(String currentSelectedTime) {
 //  popMatrix();
 //  // Change textLabel's label to current peopleCount
 //  //cp5.getController("people").setPosition(100, 50);
-//  //cp5.getController("people").setValueLabel("People count " + peopleCount + "");
+  //cp5.getController("people").setValueLabel("People count " + peopleCount + "");
 //}
 
 
