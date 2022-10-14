@@ -59,7 +59,6 @@ Glide gainMorning;
 Glide gainAfternoon;
 Glide gainNight;
 
-
 Envelope envRate1;
 Envelope envRate2;
 Envelope envRate3;
