@@ -39,15 +39,6 @@ int fromRow;
 float peopleComingIn=0;
 int peopleCount = 0;
 float sunVolt;
-//Boolean gotPeople = false;
-
-//float xPos = 899;
-//float xSpeed = 5;
-
-//float spacing = 0;
-
-//float peopleCount;
-//float dateRow = -1;
 LinkedList<People> peoples = new LinkedList<People>();
 
 String screen;
@@ -365,16 +356,11 @@ void draw() {
     //println("keep it running...");
   }
   if (millis()-datatimer > 5000) {
-      peopleCount =0; 
     drawPeople(true);
     datatimer = millis();
     println("checking count...");
   }
- 
 
-  //String fullDate =  "2021-10-14 09:50:00";
-
-  //System.out.println(fullDate.substring(11,16));
   updateTimeline();
   if (millis()-timer > 1000) {
     updateTimeline();
@@ -403,25 +389,9 @@ void draw() {
   formatDate();
 }
 
-float numberOfPeopleDuringCurrentTime() {
-  float minute = Integer.parseInt(paddedMinute);
-  if (minute % 5 ==0) {
-    for (int i = 0; i< xy.getRowCount(); i++) {
-      String currentRowDateAndTime = xy.getString(i, 0); 
-      String currentRowDate = currentRowDateAndTime.substring(0, 10);
-      String currentRowTime = currentRowDateAndTime.substring(11, 16);
-      if (currentRowDate.equals(date) && currentRowTime.equals(time)) {  
 
-
-        return xy.getInt(i, 1);
-      }
-    }
-  }
-
-  return 0;
-}
-
-void drawPeople(Boolean fiveSec) {
+void drawPeople(Boolean fiveSec) { //<>//
+  
   Boolean gotPeople = false;
   for (int i = 0; i < xy.getRowCount(); i++) {
     String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
@@ -429,45 +399,51 @@ void drawPeople(Boolean fiveSec) {
     case "1":
       if (xy.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
         println("got people.");
-        //println(xy.getString(i, 0));
-        //println(xy.getInt(i, 1));
         peopleComingIn=xy.getInt(i, 1);
-        peopleCount =xy.getInt(i, 1); 
         gotPeople = true;
       }
       break;
     case "2":
       if (xz.getString(i, 0).contains(dateAPI + " " + time + ":0")) {
         println("got people.");
-        //println(xy.getString(i, 0));
-        //println(xy.getInt(i, 1));
         peopleComingIn=xz.getInt(i, 1);
-          peopleCount =xy.getInt(i, 1); 
         gotPeople = true;
       }
       break;
     }
   }
 
-  if (!fiveSec) {
-    if (gotPeople) {
-      if (peoples.size() != peopleComingIn) {
-        for (int j = 0; j < peopleComingIn; j++) {
+  if (!fiveSec) { //<>//
+    if (gotPeople) { //<>// //<>// //<>//
+           if (peoples.size() > peopleComingIn){
+        peoples.clear();
+         for (int j = 0; j < peopleComingIn; j++) {
           peoples.add(new People(j*200));
+          
+        }
+        
+        
+      }
+      
+      else if (peoples.size() != peopleComingIn) {   //<>//
+        for (int j = 0; j < peopleComingIn; j++) { //<>//
+          peoples.add(new People(j*200)); //<>//
+          
         }
       }
-      gotPeople = false;
+     
+      gotPeople = false; //<>//
     }
 
-    for (People people : peoples) {
+    for (People people : peoples) { //<>//
       switch (screen) {
       case "1":
-        people.drawCircle(1);
-        people.decreaseSpeed1(peopleComingIn);
+        people.drawCircle(1); //<>//
+        people.decreaseSpeed1(peopleComingIn); //<>//
         break;
       case "2":
-        people.drawCircle(2);
-        people.decreaseSpeed2(peopleComingIn);
+        people.drawCircle(2); //<>//
+        people.decreaseSpeed2(peopleComingIn); //<>//
         break;
       }
     }
@@ -479,16 +455,16 @@ void drawPeople(Boolean fiveSec) {
       peoples.clear();
     }
   }
-  //peopleCount1 = peoples.size();
+  peopleCount = peoples.size();
 }
 
 void formatTime() {
   int minuteCheck = Integer.parseInt(paddedMinute);
   int hourCheck = Integer.parseInt(paddedHour);
-  System.out.println("min: " + minute);
-  System.out.println("hour: " + hour);
-  System.out.println("minuteCheck: " + minuteCheck);
-  System.out.println("hourCheck: " + hourCheck);
+  //System.out.println("min: " + minute);
+  //System.out.println("hour: " + hour);
+  //System.out.println("minuteCheck: " + minuteCheck);
+  //System.out.println("hourCheck: " + hourCheck);
 
   if (minuteCheck <= 9 && hourCheck <= 9) {
     paddedMinute = String.format("%02d", minute);
@@ -568,11 +544,7 @@ void back() {
   drawPeople(true);
 }
 
-//void monthForward() {
-//  if (month >= 1 && month < 12) {
-//    month += 1;
-//    day = 1;
-//  }
+
 
 void monthForward() {
     if (month >= 1 && month < 12) {
@@ -728,7 +700,7 @@ void drawScreen1Scenery() {
     if (yz.getString(i, 0).contains(dateAPI + " " + time)) {
       sunVolt=yz.getFloat(i, 1);
       sunnyD = true;
-      println(sunVolt);
+      //println(sunVolt);
     }
   }
   if (sunnyD) {
@@ -750,7 +722,7 @@ void drawScreen2Scenery() {
     if (yz.getString(i, 0).contains(dateAPI + " " + time)) {
       sunVolt=yz.getFloat(i, 1);
       sunnyD = true;
-      println(sunVolt);
+      //println(sunVolt);
     }
   }
   
