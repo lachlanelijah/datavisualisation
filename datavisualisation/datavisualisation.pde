@@ -1,4 +1,4 @@
-import beads.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import beads.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 import controlP5.*;
 import java.util.*;
 
@@ -75,147 +75,147 @@ void setup() {
   frameRate(60);
   timer = millis();
   datatimer = millis();
-    gui.addTextlabel("people")
+  gui.addTextlabel("people")
     .setText("People count: " + peopleCount + "")
     .setPosition(5, 600)
     .setColorValue(0xffffff00)
-    .setFont(createFont("montserrat",40))
+    .setFont(createFont("montserrat", 40))
     .setValue(3)
-  ;
+    ;
 
   gui.addButton("back")
     .setPosition(10, 660)
     .setSize(46, 20)
     .setValue(0)
-    .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
     .setLabel("←")
-  ;
-  
+    ;
+
   gui.addButton("forward")
     .setPosition(844, 660)
     .setSize(46, 20)
     .setValue(0)
-    .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
     .setLabel("→")
-  ;
-  
+    ;
+
   gui.addButton("monthForward")
     .setLabel("Month →")
     .setValue(0)
     .setPosition(830, 170)
     .setSize(40, 30)
-    .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
-  ;
-  
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
+    ;
+
   gui.addButton("monthBack")
     .setLabel("← Month")
     .setValue(0)
     .setPosition(680, 170)
     .setSize(40, 30)
-    .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
-  ;
-  
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
+    ;
+
   gui.addButton("dayForward")
     .setLabel("Day →")
     .setValue(0)
     .setPosition(780, 170)
     .setSize(40, 30)
-    .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
-  ;
-  
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
+    ;
+
   gui.addButton("dayBack")
     .setLabel("← Day")
     .setValue(0)
     .setPosition(730, 170)
     .setSize(40, 30)
-    .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
-  ;
-    
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
+    ;
+
   gui.addButton("screen1")
-   .setLabel("Screen 1")
-   .setValue(0)
-   .setPosition(0, 0)
-   .setSize(100, 40)
-   .setColorBackground(color(62,195,255))
-   .setColorActive(color(0,0,0))
-   .setColorForeground(color(7,151,255))
- ;
- 
- gui.addButton("screen2")
-   .setLabel("Screen 2")
-   .setValue(0)
-   .setPosition(100, 0)
-   .setSize(100, 40)
-   .setColorBackground(color(62,195,255))
-    .setColorActive(color(0,0,0))
-    .setColorForeground(color(7,151,255))
- ;
- 
- gui.getController("screen1")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .toUpperCase(false)
-   .setSize(15)
- ;
- 
- gui.getController("screen2")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .toUpperCase(false)
-   .setSize(15)
- ;
- 
- gui.getController("back")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .setSize(15)
- ;
- 
- gui.getController("forward")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .setSize(15)
- ;
- 
- gui.getController("monthForward")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .toUpperCase(false)
-   .setSize(9)
-  ;
-  
+    .setLabel("JonesStEast Entrance")
+    .setValue(0)
+    .setPosition(0, 0)
+    .setSize(170, 40)
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
+    ;
+
+  gui.addButton("screen2")
+    .setLabel("JonesStEast Exit")
+    .setValue(0)
+    .setPosition(170, 0)
+    .setSize(170, 40)
+    .setColorBackground(color(62, 195, 255))
+    .setColorActive(color(0, 0, 0))
+    .setColorForeground(color(7, 151, 255))
+    ;
+
+  gui.getController("screen1")
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .toUpperCase(false)
+    .setSize(15)
+    ;
+
+  gui.getController("screen2")
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .toUpperCase(false)
+    .setSize(15)
+    ;
+
+  gui.getController("back")
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .setSize(15)
+    ;
+
+  gui.getController("forward")
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .setSize(15)
+    ;
+
+  gui.getController("monthForward")
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .toUpperCase(false)
+    .setSize(9)
+    ;
+
   gui.getController("monthBack")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .toUpperCase(false)
-   .setSize(9)
-  ;
-  
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .toUpperCase(false)
+    .setSize(9)
+    ;
+
   gui.getController("dayForward")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .toUpperCase(false)
-   .setSize(9)
-  ;
-  
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .toUpperCase(false)
+    .setSize(9)
+    ;
+
   gui.getController("dayBack")
-   .getCaptionLabel()
-   .setFont(montserrat)
-   .toUpperCase(false)
-   .setSize(9)
-  ;
+    .getCaptionLabel()
+    .setFont(montserrat)
+    .toUpperCase(false)
+    .setSize(9)
+    ;
 
   hour = 0;
   minute = 0;
@@ -324,10 +324,10 @@ void draw() {
   background(178, 224, 245);
 
   if (screen == "1") {
-     gui.getController("people").setValueLabel("People coming in: " + peopleCount + "");
+    gui.getController("people").setValueLabel("People coming in: " + peopleCount + "");
     drawScreen1Scenery();
   } else {
-     gui.getController("people").setValueLabel("People going out: " + peopleCount + "");
+    gui.getController("people").setValueLabel("People going out: " + peopleCount + "");
     drawScreen2Scenery();
   }
 
@@ -390,8 +390,8 @@ void draw() {
 }
 
 
-void drawPeople(Boolean fiveSec) { //<>//
-  
+void drawPeople(Boolean fiveSec) {
+
   Boolean gotPeople = false;
   for (int i = 0; i < xy.getRowCount(); i++) {
     String dateAPI = year + "-" + paddedMonth + "-" + paddedDay;
@@ -413,37 +413,31 @@ void drawPeople(Boolean fiveSec) { //<>//
     }
   }
 
-  if (!fiveSec) { //<>//
-    if (gotPeople) { //<>// //<>// //<>//
-           if (peoples.size() > peopleComingIn){
+  if (!fiveSec) {
+    if (gotPeople) {
+      if (peoples.size() > peopleComingIn) {
         peoples.clear();
-         for (int j = 0; j < peopleComingIn; j++) {
+        for (int j = 0; j < peopleComingIn; j++) {
           peoples.add(new People(j*200));
-          
         }
-        
-        
-      }
-      
-      else if (peoples.size() != peopleComingIn) {   //<>//
-        for (int j = 0; j < peopleComingIn; j++) { //<>//
-          peoples.add(new People(j*200)); //<>//
-          
+      } else if (peoples.size() != peopleComingIn) {  
+        for (int j = 0; j < peopleComingIn; j++) {
+          peoples.add(new People(j*200));
         }
       }
-     
-      gotPeople = false; //<>//
+
+      gotPeople = false;
     }
 
-    for (People people : peoples) { //<>//
+    for (People people : peoples) {
       switch (screen) {
       case "1":
-        people.drawCircle(1); //<>//
-        people.decreaseSpeed1(peopleComingIn); //<>//
+        people.drawCircle(1);
+        people.decreaseSpeed1(peopleComingIn);
         break;
       case "2":
-        people.drawCircle(2); //<>//
-        people.decreaseSpeed2(peopleComingIn); //<>//
+        people.drawCircle(2);
+        people.decreaseSpeed2(peopleComingIn);
         break;
       }
     }
@@ -528,7 +522,7 @@ void forward() {
     minute = -1;
   }
   datatimer = millis() + 600;
-  drawPeople(true);
+  //drawPeople(true);
 }
 
 void back() {
@@ -541,32 +535,32 @@ void back() {
     minute = -1;
   }
   datatimer = millis() + 600;
-  drawPeople(true);
+  //drawPeople(true);
 }
 
 
 
 void monthForward() {
-    if (month >= 1 && month < 12) {
-      month += 1;
-      day = 1;
-    } else if (month == 12) {
-      month = 1;
-      day = 1;
-    }
-    datatimer = millis() + 600;
+  if (month >= 1 && month < 12) {
+    month += 1;
+    day = 1;
+  } else if (month == 12) {
+    month = 1;
+    day = 1;
+  }
+  datatimer = millis() + 600;
 }
 
 void monthBack() {
   if (month > 1 && month <= 12) {
-      month -= 1;
-      day = 1;
+    month -= 1;
+    day = 1;
   } else if (month == 1) {
-      month = 12;
-      day = 1;
+    month = 12;
+    day = 1;
   }
-    datatimer = millis() + 600;
-  
+  datatimer = millis() + 600;
+
   datatimer = millis() + 600;
 }
 //january, march, may, july, aug, oct, dec 31
@@ -582,7 +576,6 @@ void dayForward() {
     } else {
       day = 1;
       month += 1;
-      //monthCheck = true;
     }
   } else if (month == 2) {
     if (day < 28) {
@@ -598,16 +591,12 @@ void dayForward() {
     } else {
       day = 1;
       month += 1;
-      //monthCheck = true;
     }
   } else if (month == 12) {
     day = 1;
     month = 1;
   }
 
-  //if (monthCheck == true && month > 12) {
-  //  month = 1;
-  //}
   datatimer = millis() + 600;
 }
 
@@ -692,7 +681,7 @@ void drawScreen1Scenery() {
 
   fill(226, 227, 206); //building 10 front
   quad(485, 0, 485, 470, 640, 452, 640, 0);
-  
+
   Sun sun = new Sun();
   Boolean sunnyD = false;
   for (int i = 0; i < yz.getRowCount(); i++) {
@@ -709,7 +698,7 @@ void drawScreen1Scenery() {
   } else if (!sunnyD) {
     sun.drawSun(sunVolt, 1);
   }
-  
+
   fill(255);
   rect(660, 30, 880, 160);
 }
@@ -725,7 +714,7 @@ void drawScreen2Scenery() {
       //println(sunVolt);
     }
   }
-  
+
   if (sunnyD) {
     sun.drawSun(sunVolt, 2);
     sunnyD = false;
